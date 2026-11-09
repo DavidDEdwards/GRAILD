@@ -1,0 +1,681 @@
+(.venv) PS C:\Users\David\OneDrive\Documents\Juice WRLD guesser> .\snyk.exe code test
+
+Testing C:\Users\David\OneDrive\Documents\Juice WRLD guesser ...
+
+Open Issues
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 203
+   Info: Unsanitized input from a command line argument flows into os.rename, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: verify_standalone_release.py, line 39
+   Info: Unsanitized input from a command line argument flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: beta_update_smoke.py, line 57
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 45
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 289
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 95
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: verify_standalone_release.py, line 88
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 104
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 239
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 311
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 298
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 300
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 301
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: update_health.py, line 22
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: update_health.py, line 45
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: update_health.py, line 47
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: update_health.py, line 48
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 83
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 86
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 242
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 254
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 298
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 309
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 296
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 80
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 100
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: prepare_beta_release.py, line 36
+   Info: Unsanitized input from a command line argument flows into shutil.copyfile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: verify_standalone_release.py, line 112
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: web_app.py, line 312
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: web_app.py, line 1103
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: web_app.py, line 1126
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 259
+   Info: Unsanitized input from an environment variable flows into zipfile.ZipFile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 263
+   Info: Unsanitized input from an environment variable flows into os.replace, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 308
+   Info: Unsanitized input from an environment variable flows into shutil.copyfile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 72
+   Info: Unsanitized input from an environment variable flows into shutil.copyfile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: build_macos.py, line 78
+   Info: Unsanitized input from a command line argument flows into shutil.move, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 58
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 178
+   Info: Unsanitized input from a command line argument flows into zipfile.ZipFile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: release_tools.py, line 76
+   Info: Unsanitized input from a command line argument flows into zipfile.ZipFile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: build_macos.py, line 84
+   Info: Unsanitized input from a command line argument flows into os.walk, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 158
+   Info: Unsanitized input from a command line argument flows into os.walk, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 161
+   Info: Unsanitized input from a command line argument flows into os.walk, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 168
+   Info: Unsanitized input from a command line argument flows into os.walk, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 185
+   Info: Unsanitized input from a command line argument flows into os.walk, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 199
+   Info: Unsanitized input from a command line argument flows into os.walk, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 323
+   Info: Unsanitized input from a command line argument flows into os.walk, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: build_macos.py, line 86
+   Info: Unsanitized input from a command line argument flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 61
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 48
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: publish_build.py, line 17
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 351
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 335
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 205
+   Info: Unsanitized input from a command line argument flows into os.rename, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 98
+   Info: Unsanitized input from a command line argument flows into os.replace, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: publish_build.py, line 21
+   Info: Unsanitized input from a command line argument flows into os.replace, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: publish_build.py, line 28
+   Info: Unsanitized input from a command line argument flows into os.replace, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 204
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 207
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 215
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 222
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 230
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 231
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 235
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 238
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 246
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 274
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 177
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 198
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: prepare_beta_release.py, line 63
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: release_tools.py, line 68
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: verify_standalone_release.py, line 38
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: verify_standalone_release.py, line 41
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: verify_standalone_release.py, line 112
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 217
+   Info: Unsanitized input from a command line argument flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_launcher.py, line 9
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: publish_build.py, line 11
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: release_tools.py, line 54
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: release_tools.py, line 79
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 166
+   Info: Unsanitized input from a command line argument flows into os.rename, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 167
+   Info: Unsanitized input from a command line argument flows into os.rename, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: build_macos.py, line 83
+   Info: Unsanitized input from a command line argument flows into zipfile.ZipFile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: auto_update.py, line 233
+   Info: Unsanitized input from an environment variable flows into path concatenation, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 101
+   Info: Unsanitized input from an environment variable flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: prepare_mac_release.py, line 78
+   Info: Unsanitized input from a command line argument flows into shutil.copyfile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: prepare_beta_release.py, line 37
+   Info: Unsanitized input from a command line argument flows into shutil.copytree, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: prepare_mac_release.py, line 79
+   Info: Unsanitized input from a command line argument flows into shutil.copytree, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: prepare_beta_release.py, line 56
+   Info: Unsanitized input from a command line argument flows into shutil.copyfile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: prepare_beta_release.py, line 57
+   Info: Unsanitized input from a command line argument flows into shutil.copyfile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: publish_build.py, line 19
+   Info: Unsanitized input from a command line argument flows into shutil.copy2, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: verify_standalone_release.py, line 91
+   Info: Unsanitized input from a command line argument flows into shutil.copy2, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Command Injection
+   Path: test_updater.py, line 209
+   Info: Unsanitized input from an environment variable flows into subprocess.Popen, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [LOW] Command Injection
+   Path: test_updater.py, line 218
+   Info: Unsanitized input from an environment variable flows into subprocess.Popen, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [LOW] Command Injection
+   Path: test_updater.py, line 225
+   Info: Unsanitized input from an environment variable flows into subprocess.Popen, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [LOW] Path Traversal
+   Path: release_tools.py, line 46
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: release_tools.py, line 50
+   Info: Unsanitized input from a command line argument flows into open, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 34
+   Info: Unsanitized input from an environment variable flows into shutil.copyfile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 71
+   Info: Unsanitized input from an environment variable flows into shutil.copyfile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 62
+   Info: Unsanitized input from an environment variable flows into os.chmod, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to manipulate arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 65
+   Info: Unsanitized input from an environment variable flows into os.chmod, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to manipulate arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: validate_beta_releases.py, line 114
+   Info: Unsanitized input from an environment variable flows into shutil.rmtree, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: web_app.py, line 340
+   Info: Unsanitized input from an environment variable flows into os.remove, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: web_app.py, line 1119
+   Info: Unsanitized input from an environment variable flows into json.dump, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: test_updater.py, line 194
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: test_updater.py, line 196
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: test_updater.py, line 209
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: test_updater.py, line 218
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: test_updater.py, line 225
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: test_updater.py, line 258
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: test_updater.py, line 259
+   Info: Unsanitized input from an environment variable flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Hardcoded Non-Cryptographic Secret
+   Path: discord_oauth_broker/tests/test_app.py, line 141
+   Info: Avoid hardcoding values that are meant to be secret. Found a hardcoded string used in here.
+
+ ✗ [LOW] Hardcoded Non-Cryptographic Secret
+   Path: render-broker/discord_oauth_broker/tests/test_app.py, line 141
+   Info: Avoid hardcoding values that are meant to be secret. Found a hardcoded string used in here.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_account_tags.py, line 18
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_account_tags.py, line 60
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_account_tags.py, line 62
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_account_tags.py, line 124
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_audio_files.py, line 92
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_canary_matching.py, line 60
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_canary_matching.py, line 77
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_canary_matching.py, line 80
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_game_modes.py, line 42
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Use of Hardcoded Credentials
+   Path: test_global_leaderboard.py, line 25
+   Info: Do not hardcode credentials in code. Found hardcoded credential used in current_user_id.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 334
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 329
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 222
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 220
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 217
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: JuiceGuesserMain.py, line 12
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: JuiceGuesserMain.py, line 16
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: JuiceGuesserMain.py, line 20
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: release_tools.py, line 70
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to read arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: JuiceGuesserMain.py, line 24
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 225
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 233
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 240
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 245
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 248
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 249
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 254
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 255
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 258
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 260
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 276
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 281
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 282
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: graild_updater.py, line 300
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_launcher.py, line 6
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_launcher.py, line 12
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 196
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 202
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 206
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 209
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 210
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [LOW] Path Traversal
+   Path: mac_updater.py, line 216
+   Info: Unsanitized input from a command line argument flows into pathlib.Path, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to remove arbitrary files.
+
+ ✗ [MEDIUM] Open Redirect
+   Path: render-broker/discord_oauth_broker/app.py, line 531
+   Info: Unsanitized input from an HTTP parameter flows into fastapi.responses.RedirectResponse, where it is used as input for request redirection. This may result in an Open Redirect vulnerability.
+
+ ✗ [MEDIUM] Open Redirect
+   Path: render-broker/discord_oauth_broker/app.py, line 465
+   Info: Unsanitized input from an HTTP parameter flows into fastapi.responses.RedirectResponse, where it is used as input for request redirection. This may result in an Open Redirect vulnerability.
+
+ ✗ [MEDIUM] Open Redirect
+   Path: discord_oauth_broker/app.py, line 531
+   Info: Unsanitized input from an HTTP parameter flows into fastapi.responses.RedirectResponse, where it is used as input for request redirection. This may result in an Open Redirect vulnerability.
+
+ ✗ [MEDIUM] Open Redirect
+   Path: discord_oauth_broker/app.py, line 465
+   Info: Unsanitized input from an HTTP parameter flows into fastapi.responses.RedirectResponse, where it is used as input for request redirection. This may result in an Open Redirect vulnerability.
+
+ ✗ [MEDIUM] Command Injection
+   Path: verify_standalone_release.py, line 105
+   Info: Unsanitized input from an environment variable flows into subprocess.run, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [MEDIUM] Command Injection
+   Path: graild_updater.py, line 118
+   Info: Unsanitized input from an environment variable flows into subprocess.run, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [MEDIUM] Command Injection
+   Path: graild_updater.py, line 256
+   Info: Unsanitized input from a command line argument flows into subprocess.Popen, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [MEDIUM] Command Injection
+   Path: graild_updater.py, line 87
+   Info: Unsanitized input from a command line argument flows into subprocess.Popen, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [MEDIUM] Command Injection
+   Path: validate_beta_releases.py, line 90
+   Info: Unsanitized input from an environment variable flows into subprocess.Popen, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [MEDIUM] Command Injection
+   Path: auto_update.py, line 316
+   Info: Unsanitized input from an environment variable flows into subprocess.Popen, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ Test Summary                                                                 │
+│                                                                              │
+│   Organization:      daviddedwards                                           │
+│   Test type:         Static code analysis                                    │
+│   Project path:      C:\Users\David\OneDrive\Documents\Juice WRLD guesser    │
+│                                                                              │
+│   Total issues:   163                                                        │
+│   Ignored issues: 0 [ 0 HIGH  0 MEDIUM  0 LOW ]                              │
+│   Open issues:    163 [ 0 HIGH  10 MEDIUM  153 LOW ]                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+    
+💡 Tip
+
+   To view ignored issues, use the --include-ignores option.
+                                                            
+
+
+💡 Tip
+
+   Some capabilities, including the ability to apply ignores, are unavailable. Retest the project with the --remote-repo-url parameter or from within a repository to enable full functionality.

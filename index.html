@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JuiceSpot - Unreleased Grail Hub</title>
+    <link rel="icon" type="image/png" href="assets/graild-logo.png">
+    <link href="assets/tailwind.css" rel="stylesheet">
+    <link href="assets/fonts.css" rel="stylesheet">
+    <link href="assets/graild-ui.css" rel="stylesheet">
+</head>
+<body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="i-hub" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></symbol>
+        <symbol id="i-game" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5.5 3.5-5.5 3.5z"/></symbol>
+        <symbol id="i-catalog" viewBox="0 0 24 24"><path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></symbol>
+        <symbol id="i-board" viewBox="0 0 24 24"><path d="M8 4h8v7a4 4 0 0 1-8 0z"/><path d="M8 6H4.5c0 3 1.2 5 3.7 5.4M16 6h3.5c0 3-1.2 5-3.7 5.4"/><path d="M12 15v3.5M8.5 20.5h7"/></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+        <symbol id="i-account" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6"/></symbol>
+        <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4.500l2 2.500H19a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+        <symbol id="i-caret" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.500L19 7.5"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 8.500v5M12 17v.01"/><path d="M10.3 4 2.8 17.500A2 2 0 0 0 4.5 20.500h15a2 2 0 0 0 1.700-3L13.7 4a2 2 0 0 0-3.4 0z"/></symbol>
+        <symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.500V7.500a4 4 0 0 1 8 0v3"/></symbol>
+        <symbol id="i-cloud-off" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M8.5 6.300A6 6 0 0 1 18 11a4 4 0 0 1 2.5 6.500M16 18H7a4.5 4.5 0 0 1-1.5-8.700"/></symbol>
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></symbol>
+        <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+        <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v7a4 4 0 0 1-8 0z"/><path d="M8 6H4.500c0 3 1.2 5 3.7 5.400M16 6h3.500c0 3-1.2 5-3.7 5.400"/><path d="M12 15v3.500M8.5 20.500h7"/></symbol>
+        <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 13.500h6L10 21l8-10.500h-6z"/></symbol>
+    </svg>
+
+    <div class="app-shell">
+    <header class="rail">
+        <div class="app-brand">
+            <img id="app-logo" class="app-brand-logo" src="assets/graild-logo.png" alt="GRAIL'D crowned G logo" width="64" height="64">
+            <div class="min-w-0">
+                <h1 class="wordmark">Grail'd</h1>
+                <p class="brand-sub">- Powered by Canary</p>
+                <p class="brand-credit">made by ⁹⁹⁹DAVID⁹⁹⁹</p>
+            </div>
+        </div>
+        <nav class="rail-nav" aria-label="Main">
+            <button onclick="switchTab('hub')" id="btn-hub" class="nav-btn is-active bg-purple-600" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-hub"></use></svg>Hub</button>
+            <div id="game-nav" class="game-nav" onmouseenter="setGameMenu(true)" onmouseleave="setGameMenu(false)" onkeydown="handleGameMenuKey(event)" onfocusout="if (!this.contains(event.relatedTarget)) setGameMenu(false)">
+                <button onclick="switchTab('game'); setGameMenu(false)" id="btn-game" class="nav-btn"><svg class="icon" aria-hidden="true"><use href="#i-game"></use></svg>Game</button>
+                <button id="game-menu-toggle" type="button" onclick="setGameMenu(document.getElementById('game-mode-menu').hidden)" aria-label="Choose a game mode" aria-haspopup="menu" aria-expanded="false" aria-controls="game-mode-menu" class="nav-caret"><svg class="icon" aria-hidden="true"><use href="#i-caret"></use></svg></button>
+                <div id="game-mode-menu" class="game-nav-menu" hidden>
+                    <div class="game-nav-panel" role="menu" aria-label="Game modes">
+                        <button id="nav-mode-classic" type="button" role="menuitemradio" aria-checked="true" onclick="chooseNavGameMode('classic')">Classic Snippets</button>
+                        <button id="nav-mode-random" type="button" role="menuitemradio" aria-checked="false" onclick="chooseNavGameMode('random')">Random Drop</button>
+                        <p class="menu-group" role="presentation">Challenges</p>
+                        <button type="button" role="menuitem" data-challenge="sudden_death" onclick="setGameMenu(false); GraildChallenges.start('sudden_death')">Sudden Death</button>
+                        <button type="button" role="menuitem" data-challenge="three_lives" onclick="setGameMenu(false); GraildChallenges.start('three_lives')">Three Lives</button>
+                        <button type="button" role="menuitem" data-challenge="time_attack" onclick="setGameMenu(false); GraildChallenges.start('time_attack')">Time Attack</button>
+                        <button type="button" role="menuitem" data-challenge="sprint" onclick="setGameMenu(false); GraildChallenges.start('sprint')">Sprint</button>
+                        <p class="menu-note">Changing modes starts a fresh round.</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="switchTab('catalog')" id="btn-catalog" class="nav-btn"><svg class="icon" aria-hidden="true"><use href="#i-catalog"></use></svg>Catalog</button>
+            <button onclick="switchTab('leaderboard')" id="btn-leaderboard" class="nav-btn"><svg class="icon" aria-hidden="true"><use href="#i-board"></use></svg>Leaderboard</button>
+            <button onclick="switchTab('settings')" id="btn-settings" class="nav-btn"><svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>Settings</button>
+            <button onclick="switchTab('account')" id="btn-account" class="nav-btn"><svg class="icon" aria-hidden="true"><use href="#i-account"></use></svg>Account</button>
+        </nav>
+        <div class="rail-foot">
+            <button id="palette-open" type="button" class="palette-trigger" aria-label="Open the command palette"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg><span>Quick search</span><kbd>Ctrl K</kbd></button>
+            <button onclick="chooseMusicFolder()" class="btn btn-secondary btn-sm"><svg class="icon" aria-hidden="true"><use href="#i-folder"></use></svg><span>Choose <span class="label-long">Music </span>Folder</span></button>
+        </div>
+    </header>
+
+    <div class="app-main">
+    <main class="app-content">
+
+        <!-- TAB 1: HUB & DASHBOARD -->
+        <section id="tab-hub" class="space-y-5">
+            <div class="hub-hero">
+                <span class="pill">Your Local Library</span>
+                <h2 class="hub-title">How well do you know your <em>music</em>?</h2>
+                <p class="sub">Guess tracks from short audio previews, browse the songs in your selected folder, and build a score across rounds.</p>
+                <div class="hub-actions">
+                    <button onclick="document.getElementById('game-modes').scrollIntoView({behavior: 'smooth'})" class="btn btn-primary btn-lg">Choose a Game</button>
+                    <button onclick="switchTab('catalog')" class="btn btn-secondary btn-lg">Explore Catalog</button>
+                    <button id="hub-resume" type="button" onclick="switchTab('game')" class="btn btn-secondary btn-lg hidden">Resume round</button>
+                </div>
+                <button id="hub-note" type="button" class="hub-note hidden"><b id="hub-note-tag"></b><strong id="hub-note-title"></strong><span id="hub-note-detail"></span></button>
+            </div>
+
+            <div class="hub-row">
+                <div class="card library-card">
+                    <div id="hub-disc" class="disc" aria-hidden="true"></div>
+                    <h4 class="text-lg font-bold self-end">Music Library</h4>
+                    <p id="library-summary" class="text-xs font-semibold self-start" style="color:var(--cyan)">Loading local tracks...</p>
+                    <div class="lib-body">
+                        <div class="library-folder"><span id="folder-summary">Choose a folder to load your songs.</span></div>
+                        <div id="hub-library-details" class="hidden">
+                            <div class="meter-row">
+                                <div class="small"><span>Canary eras found</span><span id="hub-era-coverage-text" class="tabular"></span></div>
+                                <progress id="hub-era-coverage" max="100" value="0" aria-label="Songs with a Canary era"></progress>
+                            </div>
+                            <div id="hub-formats" class="chip-row mt-3"></div>
+                        </div>
+                        <button id="hub-library-cta" type="button" onclick="chooseMusicFolder()" class="btn btn-primary btn-sm btn-block mt-3 hidden">Choose a music folder</button>
+                    </div>
+                </div>
+                <div class="hub-grid" aria-label="Your lifetime stats">
+                    <div class="stat"><p class="stat-label">Lifetime points</p><p id="hub-stat-points" class="stat-value c-p">-</p></div>
+                    <div class="stat"><p class="stat-label">Accuracy</p><p id="hub-stat-accuracy" class="stat-value c-c">-</p></div>
+                    <div class="stat"><p class="stat-label">Best streak</p><p id="hub-stat-streak" class="stat-value c-o">-</p></div>
+                    <div class="stat"><p class="stat-label">Songs played</p><p id="hub-stat-played" class="stat-value">-</p></div>
+                </div>
+            </div>
+            <button id="hub-trophy" type="button" class="card hub-trophy hidden" onclick="switchTab('account'); switchAccountTab('achievements')">
+                <span class="trophy-badge"><svg class="icon" aria-hidden="true"><use href="#i-trophy"></use></svg></span>
+                <span class="trophy-text"><span class="tiny">Next trophy</span><strong id="hub-trophy-name"></strong><span id="hub-trophy-desc" class="small block"></span></span>
+                <span class="w-28 shrink-0"><progress id="hub-trophy-progress" max="1" value="0" aria-label="Progress to next trophy"></progress><span id="hub-trophy-count" class="tiny tabular block mt-1 text-right"></span></span>
+            </button>
+
+            <div class="card card-pad space-y-3">
+                <label class="setting-row">Play from
+                    <select id="hub-library-source" onchange="changeLibrarySource(this.value)"><option value="local">Local files - in-app games</option><option value="canary">Canary website player</option></select>
+                </label>
+                <label class="setting-row">
+                    <span>Play by recording era</span>
+                    <select id="hub-recording-era-select" onchange="changeRecordingEra(this.value)"><option value="">All eras</option></select>
+                </label>
+                <div id="hub-era-chips" class="chip-row" role="group" aria-label="Recording era shortcuts"></div>
+                <p id="hub-era-summary" class="small" role="status">Uses Canary recording eras for confirmed local matches.</p>
+                <div class="flex flex-wrap gap-x-5 gap-y-1">
+                    <button type="button" onclick="switchTab('catalog'); switchCatalogView('local')" class="link-btn">Match songs and view their Canary eras &rarr;</button>
+                    <button id="canary-refresh-eras" type="button" onclick="refreshCanaryEraList()" class="link-btn is-p">Refresh Canary eras</button>
+                </div>
+                <p id="canary-era-load-status" class="small" style="color:var(--cyan)" role="status"></p>
+            </div>
+            <div id="game-modes" class="space-y-4 scroll-mt-24">
+                <div><h2 class="section-title">Choose your game</h2><p class="mt-1 sub">Two ways to play at your own pace, and four challenges with a score to beat.</p></div>
+                <div id="local-game-choices" class="game-cards">
+                    <button type="button" onclick="startGameMode('classic')" class="card game-card">
+                        <span class="kicker">The original</span>
+                        <span class="wave" data-wave="start" aria-hidden="true"></span>
+                        <h3>Classic Snippets</h3>
+                        <p>Know it from the intro? Guess the song from its opening seconds. Each attempt reveals a longer preview.</p>
+                        <span class="go">Play Classic &rarr;</span>
+                    </button>
+                    <button type="button" onclick="startGameMode('random')" class="card game-card is-cyan">
+                        <span class="kicker kicker-c">New game</span>
+                        <span class="wave" data-wave="middle" aria-hidden="true"></span>
+                        <h3>Random Drop</h3>
+                        <p>Jump into a random part of the song. The starting point stays the same for the round as each attempt reveals more.</p>
+                        <span class="go">Play Random Drop &rarr;</span>
+                    </button>
+                </div>
+                <div id="challenge-section" class="space-y-3">
+                    <div class="challenge-head">
+                        <h3 class="card-title">Challenges</h3>
+                        <p class="small">Normal rounds with extra rules. Points still count toward your lifetime score; your best run is saved for each one.</p>
+                    </div>
+                    <div class="challenge-cards">
+                        <button type="button" class="card challenge-card" data-tone="red" onclick="GraildChallenges.start('sudden_death')">
+                            <span class="challenge-icon" aria-hidden="true">1&times;</span>
+                            <h4>Sudden Death</h4>
+                            <p>One wrong guess ends the run.</p>
+                            <span class="challenge-best" data-best-for="sudden_death">No runs yet</span>
+                        </button>
+                        <button type="button" class="card challenge-card" data-tone="pink" onclick="GraildChallenges.start('three_lives')">
+                            <span class="challenge-icon" aria-hidden="true">&hearts;&hearts;&hearts;</span>
+                            <h4>Three Lives</h4>
+                            <p>Every missed song costs a life.</p>
+                            <span class="challenge-best" data-best-for="three_lives">No runs yet</span>
+                        </button>
+                        <button type="button" class="card challenge-card" data-tone="lime" onclick="GraildChallenges.start('time_attack')">
+                            <span class="challenge-icon" aria-hidden="true">90s</span>
+                            <h4>Time Attack</h4>
+                            <p>Most points in 90 seconds.</p>
+                            <span class="challenge-best" data-best-for="time_attack">No runs yet</span>
+                        </button>
+                        <button type="button" class="card challenge-card" data-tone="blue" onclick="GraildChallenges.start('sprint')">
+                            <span class="challenge-icon" aria-hidden="true">10</span>
+                            <h4>Sprint</h4>
+                            <p>Ten songs, highest score wins.</p>
+                            <span class="challenge-best" data-best-for="sprint">No runs yet</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="canary-website-choice" class="hidden card card-accent card-pad space-y-3">
+                    <h3 class="section-title">Canary Shuffle</h3>
+                    <p class="sub">Pick a random song from Canary, using your selected recording era. Opens Canary's own player in your browser.</p>
+                    <p class="small">Press Play on Canary to listen. Website playback has its own controls; in-app guessing and timed snippets use local files.</p>
+                    <button id="canary-random-play" type="button" onclick="playRandomCanarySong()" class="btn btn-cyan">Open a random Canary song</button>
+                    <p id="canary-random-status" class="text-sm" style="color:var(--cyan)" role="status"></p>
+                </div>
+                <p id="mode-message" class="min-h-5 text-sm" style="color:var(--red)" role="status"></p>
+            </div>
+        </section>
+
+        <!-- GAME PANEL: opened from Hub game tiles -->
+        <section id="tab-game" class="hidden">
+            <div class="game-layout">
+                <div class="space-y-3 min-w-0">
+                    <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+                        <button type="button" onclick="switchTab('hub')" class="text-sm font-bold" style="color:var(--muted)">&larr; All games</button>
+                        <p id="game-resume-status" class="tiny" role="status">Your current round saves automatically. Return here to resume it.</p>
+                    </div>
+                    <div class="card card-accent card-pad space-y-5">
+                        <div id="challenge-summary" class="challenge-summary hidden" role="status"></div>
+                        <div class="game-head">
+                            <div>
+                                <h3 id="game-mode-title" class="text-xl font-extrabold">Classic Snippets</h3>
+                                <p id="game-mode-description" class="small">Guess the song from its intro.</p>
+                                <p class="small">Attempt <span id="current-attempt">1</span> of 6</p>
+                            </div>
+                            <div class="game-hud">
+                                <span id="game-score" class="tabular">Score: 0</span>
+                                <p class="streak tabular" id="game-streak-line">Streak: <span id="game-streak">0</span> 🔥</p>
+                            </div>
+                        </div>
+
+                        <div id="challenge-hud" class="challenge-hud hidden" aria-label="Challenge run">
+                            <span id="challenge-name" class="challenge-name"></span>
+                            <span id="challenge-meter" class="challenge-meter tabular" role="timer" aria-live="off"></span>
+                            <span class="challenge-run"><span class="tiny">Run</span> <strong id="challenge-score" class="tabular"></strong></span>
+                            <span id="challenge-best" class="tiny"></span>
+                            <button id="challenge-quit" type="button" class="btn btn-quiet btn-sm">End run</button>
+                        </div>
+
+                        <div class="game-options">
+                            <label class="field">Difficulty
+                                <select id="difficulty-select" onchange="changeDifficulty(this.value)">
+                                    <option>Easy</option><option>Medium</option><option>Hard</option>
+                                </select>
+                            </label>
+                            <label class="field">Recording era
+                                <select id="recording-era-select" onchange="changeRecordingEra(this.value)"><option value="">All eras</option></select>
+                            </label>
+                        </div>
+                        <p class="tiny" style="margin-top:6px">Recording era uses automatically checked or confirmed Canary eras.</p>
+
+                        <div id="game-blocker" class="hidden"></div>
+
+                        <div id="game-play-area" class="space-y-5">
+                        <div id="timeline-bars" aria-label="Attempts">
+                            <div class="attempt-seg bg-purple-500" id="bar-0"></div>
+                            <div class="attempt-seg bg-slate-700" id="bar-1"></div>
+                            <div class="attempt-seg bg-slate-700" id="bar-2"></div>
+                            <div class="attempt-seg bg-slate-700" id="bar-3"></div>
+                            <div class="attempt-seg bg-slate-700" id="bar-4"></div>
+                            <div class="attempt-seg bg-slate-700" id="bar-5"></div>
+                        </div>
+
+                        <div id="snippet-deck" class="deck">
+                            <div class="eq" id="snippet-eq" aria-hidden="true"></div>
+                            <button onclick="playSnippetSimulation()" id="play-btn" type="button">
+                                <span id="snippet-play-icon" aria-hidden="true">&#9654;</span> <span id="snippet-play-label">PLAY</span> <span><span id="snippet-sec">1</span>s SNIPPET</span>
+                            </button>
+                            <div class="deck-meta">
+                                <progress id="snippet-progress" max="1000" value="0" aria-label="Snippet playback progress"></progress>
+                                <span id="snippet-clock" class="tabular">0.0s</span>
+                                <span id="round-worth" class="worth tabular"></span>
+                            </div>
+                            <label class="volume-row">
+                                <span>Volume</span>
+                                <input id="volume-control" type="range" min="0" max="100" value="70" aria-label="Music volume" oninput="changeVolume(this.value)">
+                                <span id="volume-value" class="w-10 text-right tabular-nums">70%</span>
+                            </label>
+                        </div>
+
+                        <div id="cover-container" class="cover-box hidden">
+                            <div class="cover-frame">
+                                <div id="cover-art-inner">💿</div>
+                            </div>
+                            <p id="correct-song-title">Rental</p>
+                        </div>
+
+                        <ol id="round-log" class="round-log hidden" aria-label="Your attempts this round"></ol>
+
+                        <!-- Input & Guess Box -->
+                        <div id="input-area" class="space-y-3">
+                            <div class="guess-wrap">
+                                <input type="text" id="guess-input" placeholder="Type song title..." autocomplete="off" oninput="handleTyping(event)" onkeydown="handleGuessKey(event)" onblur="window.setTimeout(hideSuggestions, 120)" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions" aria-label="Song title guess">
+                                <div id="suggestions" class="hidden" role="listbox"></div>
+                            </div>
+                            <div class="game-actions">
+                                <button onclick="submitGuess()" type="button" class="btn btn-green">SUBMIT</button>
+                                <button onclick="skipAttempt()" type="button" class="btn btn-quiet">SKIP / +1s</button>
+                                <button id="reroll-btn" onclick="rerollSong()" type="button" class="btn btn-cyan">REROLL SONG</button>
+                            </div>
+                            <p class="key-hints"><span><kbd>Enter</kbd> submit</span><span><kbd>Ctrl</kbd> <kbd>Space</kbd> play</span><span><kbd>Ctrl</kbd> <kbd>Enter</kbd> skip</span><span><kbd>?</kbd> all shortcuts</span></p>
+                        </div>
+                        </div>
+
+                        <div id="feedback-banner" class="feedback" role="status"></div>
+                        <button id="next-round-btn" onclick="startNextRound()" type="button" class="btn btn-primary btn-lg btn-block hidden">Next Round</button>
+                    </div>
+                </div>
+                <aside class="game-side" aria-label="This session">
+                    <div class="card card-pad space-y-3">
+                        <h4 class="kicker kicker-c">This session</h4>
+                        <div class="side-stats">
+                            <div class="stat"><p class="stat-label">Correct</p><p id="side-correct" class="stat-value c-g">0</p></div>
+                            <div class="stat"><p class="stat-label">Wrong</p><p id="side-wrong" class="stat-value c-r">0</p></div>
+                            <div class="stat"><p class="stat-label">Accuracy</p><p id="side-accuracy" class="stat-value c-c">-</p></div>
+                            <div class="stat"><p class="stat-label">Rounds</p><p id="side-rounds" class="stat-value">0</p></div>
+                        </div>
+                    </div>
+                    <div class="card card-pad space-y-3">
+                        <h4 class="kicker">Round history</h4>
+                        <ul id="round-history" class="history"></ul>
+                        <p id="round-history-empty" class="small">Finished rounds appear here until you close GRAIL'D.</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- TAB 3: CATALOG BROWSER -->
+        <section id="tab-catalog" class="hidden space-y-4">
+            <div class="flex justify-between items-center flex-wrap gap-4">
+                <div class="min-w-0">
+                    <h2 class="section-title">Your Music Catalog</h2>
+                    <p id="catalog-summary" class="small break-all">Tracks found in your selected folder.</p>
+                </div>
+                <label id="local-format-control" class="flex items-center gap-3 text-xs font-semibold" style="color:var(--muted)">Audio format
+                    <select id="catalog-format" onchange="filterCatalog(this.value)">
+                        <option value="all">All formats</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="era-banner">
+                <div class="era-banner-top">
+                    <p id="automatic-era-status" role="status">Canary automatically checks your library for recording eras.</p>
+                    <button id="automatic-era-recheck" type="button" onclick="recheckAutomaticEras()" class="btn btn-secondary btn-sm">Recheck song eras</button>
+                </div>
+                <progress id="era-scan-progress" class="hidden" max="100" value="0" aria-label="Canary era check progress"></progress>
+            </div>
+            <div class="seg seg-inline" role="tablist" aria-label="Catalogue sources">
+                <button id="local-catalog-tab" type="button" role="tab" aria-selected="true" onclick="switchCatalogView('local')" class="seg-btn">Local library</button>
+                <button id="canary-catalog-tab" type="button" role="tab" aria-selected="false" onclick="switchCatalogView('canary')" class="seg-btn">Canary catalogue</button>
+            </div>
+            <div id="catalog-toolbar" class="space-y-3">
+                <div class="catalog-toolbar">
+                    <div class="search-box"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg><input id="catalog-search" type="search" placeholder="Search songs or eras..." aria-label="Search your songs or eras" oninput="renderCatalog(catalogFilter)"></div>
+                    <label class="flex items-center gap-2 text-xs font-semibold" style="color:var(--muted)">Sort
+                        <select id="catalog-sort" onchange="renderCatalog(catalogFilter)">
+                            <option value="az">Title A-Z</option>
+                            <option value="za">Title Z-A</option>
+                            <option value="era">Recording era</option>
+                            <option value="played">Most played</option>
+                            <option value="missed">Most missed</option>
+                        </select>
+                    </label>
+                    <div class="seg" role="group" aria-label="Catalog layout">
+                        <button id="catalog-view-grid" type="button" class="seg-btn is-active" style="padding:7px 10px" aria-label="Grid view" aria-pressed="true" onclick="setCatalogLayout('grid')"><svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg></button>
+                        <button id="catalog-view-list" type="button" class="seg-btn" style="padding:7px 10px" aria-label="List view" aria-pressed="false" onclick="setCatalogLayout('list')"><svg class="icon" aria-hidden="true"><use href="#i-list"></use></svg></button>
+                    </div>
+                </div>
+                <div id="catalog-status-chips" class="chip-row" role="group" aria-label="Filter by Canary era status"></div>
+            </div>
+            <div class="catalog-grid" id="catalog-grid" aria-live="polite">
+                <div class="skeleton-grid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+            </div>
+            <div id="catalog-foot" class="catalog-foot hidden">
+                <p id="catalog-count" class="tiny tabular"></p>
+                <button id="catalog-more" type="button" class="btn btn-secondary btn-sm" onclick="showMoreCatalog()">Show more songs</button>
+            </div>
+            <div id="canary-browser" class="hidden space-y-4">
+                <p class="sub">Explore Canary metadata and artwork. Gameplay always uses your local audio files.</p>
+                <form onsubmit="event.preventDefault(); searchCanary(0)" class="card canary-form">
+                    <label class="field">Song title or alias<input id="canary-search" type="search" maxlength="200" placeholder="Search songs..."></label>
+                    <label class="field">Recording era<input id="canary-era" list="canary-era-options" maxlength="60" placeholder="Any era"><datalist id="canary-era-options"><option value="JUTE"><option value="WOD"><option value="DRFL"></datalist></label>
+                    <label class="field">Category<select id="canary-category"><option value="">All categories</option></select></label>
+                    <button id="canary-search-button" type="submit" class="btn btn-purple">Search Canary</button>
+                </form>
+                <p id="canary-browser-status" class="text-sm" style="color:var(--cyan)" role="status"></p>
+                <div id="canary-results" class="canary-results"></div>
+                <div class="flex items-center justify-between gap-3">
+                    <button id="canary-previous" type="button" onclick="searchCanary(canaryPage - 1)" disabled class="btn btn-secondary btn-sm">Previous</button>
+                    <span id="canary-pagination" class="small tabular"></span>
+                    <button id="canary-next" type="button" onclick="searchCanary(canaryPage + 1)" disabled class="btn btn-secondary btn-sm">Next</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: LEADERBOARD -->
+        <section id="tab-leaderboard" class="hidden">
+            <div class="board-layout">
+                <div class="card card-accent card-pad space-y-4 min-w-0">
+                    <div class="card-head">
+                        <h3 class="card-title">Global Leaderboard</h3>
+                        <button id="global-refresh" type="button" onclick="refreshGlobalLeaderboard()" class="btn btn-purple btn-sm">Refresh</button>
+                    </div>
+                    <p id="global-status" role="status">Top 50 players by lifetime points.</p>
+                    <div id="global-podium" class="podium hidden" aria-hidden="true"></div>
+                    <div id="global-filter-wrap" class="search-box hidden"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg><input id="global-filter" type="search" placeholder="Find a player..." aria-label="Find a player" oninput="filterGlobalBoard()"></div>
+                    <div id="global-leaderboard" class="board-list" aria-live="polite"></div>
+                </div>
+                <div class="card card-accent-p card-pad space-y-4 min-w-0">
+                    <h3 class="card-title">Your Records</h3>
+                    <h4 class="kicker" style="color:var(--faint)">Current session</h4>
+                    <div class="record-grid">
+                        <div class="stat span-2"><p class="stat-label">Score - current session</p><p id="session-score" class="stat-value c-p">0 pts</p></div>
+                        <div class="stat"><p class="stat-label">Current streak</p><p id="session-streak" class="stat-value c-o">0</p></div>
+                        <div class="stat"><p class="stat-label">Songs in folder</p><p id="session-tracks" class="stat-value c-c">0</p></div>
+                        <div class="stat"><p class="stat-label">Correct guesses</p><p id="session-correct-guesses" class="stat-value c-g">0</p></div>
+                        <div class="stat"><p class="stat-label">Wrong guesses</p><p id="session-wrong-guesses" class="stat-value c-r">0</p></div>
+                    </div>
+                </div>
+                <div class="card card-pad space-y-4 board-full min-w-0">
+                    <div class="card-head">
+                        <div><h3 class="card-title">Per-song record</h3><p class="small">Saved to your account across sessions.</p></div>
+                        <div class="search-box" style="flex:0 1 280px"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg><input id="song-record-search" type="search" placeholder="Search songs..." aria-label="Search per-song records" oninput="renderSongRecords()"></div>
+                    </div>
+                    <div id="song-insights" class="insights hidden"></div>
+                    <div>
+                        <div class="record-head">
+                            <button type="button" data-sort="title" onclick="sortSongRecords('title')">Song</button>
+                            <button type="button" class="r" data-sort="correct" onclick="sortSongRecords('correct')">Right</button>
+                            <button type="button" class="r" data-sort="wrong" onclick="sortSongRecords('wrong')">Wrong</button>
+                            <button type="button" class="r acc" data-sort="accuracy" onclick="sortSongRecords('accuracy')">Accuracy</button>
+                        </div>
+                        <div id="song-leaderboard" class="record-list" aria-live="polite"><div class="skeleton-rows"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></div>
+                        <p id="song-record-count" class="tiny tabular mt-2 hidden"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-account" class="hidden narrow-col space-y-5">
+            <div id="auth-card" class="card card-accent auth-layout">
+                <div class="auth-aside">
+                    <img src="assets/graild-logo.png" alt="" width="76" height="76">
+                    <h2>Your GRAIL'D Account</h2>
+                    <ul class="auth-points">
+                        <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Save your score and per-song records</li>
+                        <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Climb the global leaderboard</li>
+                        <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Unlock 50 achievements and earn tags</li>
+                    </ul>
+                </div>
+                <div class="auth-main">
+                    <div class="seg">
+                        <button id="signin-tab" type="button" onclick="showAuthForm('signin')" class="seg-btn is-active">Sign In</button>
+                        <button id="register-tab" type="button" onclick="showAuthForm('register')" class="seg-btn">Create Account</button>
+                    </div>
+                    <div class="provider-box mt-5 space-y-3">
+                        <p class="text-sm font-bold">Connect a provider</p>
+                        <p class="small">Verify with Google or Discord, then create your GRAIL'D username and password.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" onclick="connectSocial('google')" class="btn btn-secondary flex-1 whitespace-nowrap">Continue with Google</button>
+                            <button type="button" onclick="connectSocial('discord')" class="btn btn-discord flex-1 whitespace-nowrap">Continue with Discord</button>
+                        </div>
+                        <p id="auth-social-message" class="min-h-5 break-words text-xs" style="color:var(--cyan)" role="status"></p>
+                    </div>
+                    <form id="sign-in-form" class="mt-5 space-y-4" onsubmit="signIn(event)">
+                        <label class="field">Username
+                            <input id="signin-username" name="username" type="text" autocomplete="username" required maxlength="24">
+                        </label>
+                        <label class="field">Password
+                            <input id="signin-password" name="password" type="password" autocomplete="current-password" required maxlength="128">
+                            <span class="hint is-bad hidden" data-caps-for="signin-password">Caps Lock is on</span>
+                        </label>
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </form>
+                    <form id="register-form" class="mt-5 hidden space-y-4" onsubmit="registerAccount(event)">
+                        <label class="field">Username
+                            <input id="register-username" name="username" type="text" autocomplete="username" pattern="[A-Za-z0-9_]{3,24}" required maxlength="24">
+                            <span id="register-username-hint" class="hint">3–24 letters, numbers, or underscores</span>
+                        </label>
+                        <label class="field">Password
+                            <input id="register-password" name="new-password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required>
+                            <span id="register-password-meter" class="pw-meter" data-score="0" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                            <span id="register-password-hint" class="hint">At least 10 characters</span>
+                            <span class="hint is-bad hidden" data-caps-for="register-password">Caps Lock is on</span>
+                        </label>
+                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                    </form>
+                    <p id="auth-message" class="mt-4 min-h-5 text-center text-sm" style="color:var(--red)" role="status"></p>
+                </div>
+            </div>
+
+            <div id="profile-card" class="card card-accent-p hidden card-pad space-y-5">
+                <div class="seg" role="tablist" aria-label="Account sections">
+                    <button id="account-profile-tab" type="button" role="tab" aria-selected="true" aria-controls="account-profile-panel" onclick="switchAccountTab('profile')" class="seg-btn is-active">Profile</button>
+                    <button id="account-achievements-tab" type="button" role="tab" aria-selected="false" aria-controls="account-achievements-panel" onclick="switchAccountTab('achievements')" class="seg-btn">Achievements <span id="achievement-tab-count" class="tabular">0/50</span></button>
+                </div>
+                <div id="account-profile-panel" role="tabpanel" aria-labelledby="account-profile-tab" class="space-y-5">
+                <div class="profile-head">
+                    <div id="profile-avatar">🧃</div>
+                    <div class="min-w-0 flex-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h2 id="profile-display-name" class="break-words text-xl font-extrabold"></h2>
+                            <span id="profile-owner-tag" tabindex="0" title="Verified owner / creator of GRAIL'D." class="owner-tag hidden">Owner / Creator</span>
+                            <div id="profile-tags" class="flex flex-wrap gap-2" aria-label="Account tags"></div>
+                        </div>
+                        <p id="profile-username" class="break-all text-sm" style="color:var(--cyan)"></p>
+                        <p id="profile-created" class="tiny mt-1"></p>
+                        <p id="profile-connected-providers" class="small mt-1"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    <div class="stat"><p class="stat-label">Correct</p><p id="profile-correct" class="stat-value c-g">0</p></div>
+                    <div class="stat"><p class="stat-label">Incorrect</p><p id="profile-wrong" class="stat-value c-r">0</p></div>
+                    <div class="stat"><p class="stat-label">Accuracy</p><p id="profile-accuracy" class="stat-value c-c">0%</p></div>
+                    <div class="stat"><p class="stat-label">Points</p><p id="profile-points" class="stat-value c-p">0</p></div>
+                    <div class="stat"><p class="stat-label">Current streak</p><p id="profile-current-streak" class="stat-value c-o">0</p></div>
+                    <div class="stat"><p class="stat-label">Best streak</p><p id="profile-best-streak" class="stat-value c-o">0</p></div>
+                    <div class="stat"><p class="stat-label">Songs played</p><p id="profile-songs-played" class="stat-value">0</p></div>
+                    <div class="stat"><p class="stat-label">Grails collected</p><p id="profile-grails" class="stat-value c-c">0</p></div>
+                </div>
+                <div class="space-y-3 divider">
+                    <h3 class="text-sm font-bold">Account tags</h3>
+                    <p class="small">Tags follow your verified Discord or Google sign-in across devices. Use the same sign-in provider to recognize the same global account.</p>
+                    <p id="global-tags-status" class="small" style="color:var(--cyan-2)" role="status"></p>
+                    <p id="global-player-id" class="break-all tiny"></p>
+                    <button type="button" onclick="refreshGlobalTags(globalTagGeneration)" class="link-btn">Refresh global tags</button>
+                    <p class="small">Hover over a tag or focus it to see how it was obtained. Earned tags stay unlocked.</p>
+                    <p id="top-earner-progress" class="text-sm" style="color:var(--purple-2)" role="status"></p>
+                    <div id="tag-management" class="hidden space-y-3 provider-box">
+                        <h4 class="text-sm font-bold" style="color:var(--cyan-2)">Manage tags</h4>
+                        <form onsubmit="event.preventDefault(); createCustomTag()" class="space-y-3">
+                            <label class="field">New tag name
+                                <input id="custom-tag-name" maxlength="32" required placeholder="e.g. Contributor">
+                            </label>
+                            <label class="field">Hover description
+                                <input id="custom-tag-description" maxlength="240" required placeholder="Why this person received the tag">
+                            </label>
+                            <button id="custom-tag-create" type="submit" class="btn btn-purple btn-sm">Create custom tag</button>
+                        </form>
+                        <label class="field">Tag to assign or remove
+                            <select id="tag-definition-select" onchange="selectedTagId=this.value"><option value="beta_tester">Beta Tester</option></select>
+                        </label>
+                        <form onsubmit="event.preventDefault(); assignDiscordTesterTag(true)" class="space-y-3">
+                            <label class="field">Discord user ID or mention
+                                <input id="tag-discord-id" type="text" maxlength="30" placeholder="Numeric Discord ID or &lt;@ID&gt;" required>
+                            </label>
+                            <p class="small">Use their numeric ID or paste a Discord mention. Tags can be assigned before their first sign-in and will follow that Discord account.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button id="discord-tag-assign" type="submit" class="btn btn-purple btn-sm">Assign by Discord</button>
+                                <button id="discord-tag-remove" type="button" onclick="assignDiscordTesterTag(false)" class="btn btn-secondary btn-sm">Remove by Discord</button>
+                            </div>
+                        </form>
+                        <p class="small">Choose a registered player, or use their Discord ID above. Only the verified owner can create and assign custom tags. Owner and earned tags are protected.</p>
+                        <label class="field">Account
+                            <select id="tag-account-select"></select>
+                        </label>
+                        <div class="flex flex-wrap gap-2">
+                            <button id="tag-assign-button" type="button" onclick="assignTesterTag(true)" class="btn btn-purple btn-sm">Assign tag</button>
+                            <button id="tag-remove-button" type="button" onclick="assignTesterTag(false)" class="btn btn-secondary btn-sm">Remove tag</button>
+                        </div>
+                        <p id="tag-management-status" class="small" style="color:var(--cyan-2)" role="status"></p>
+                    </div>
+                </div>
+                <div class="space-y-3 divider">
+                    <h3 class="text-sm font-bold">Your game preferences</h3>
+                    <label class="setting-row font-semibold">Play from
+                        <select id="account-library-source" onchange="changeLibrarySource(this.value)"><option value="local">Local files - in-app games</option><option value="canary">Canary website player</option></select>
+                    </label>
+                    <label class="setting-row font-semibold">Recording era
+                        <select id="account-recording-era-select" onchange="changeRecordingEra(this.value)"><option value="">All eras</option></select>
+                    </label>
+                    <p id="account-era-summary" class="small">Saved separately for your account. Era metadata comes from Canary.</p>
+                </div>
+                <form id="profile-edit-form" class="space-y-4 divider" onsubmit="saveProfile(event)">
+                    <h3 class="text-sm font-bold">Edit Profile</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="connectSocial('google')" class="btn btn-secondary btn-sm">Link Google</button>
+                        <button type="button" onclick="connectSocial('discord')" class="btn btn-discord btn-sm">Link Discord</button>
+                    </div>
+                    <p id="profile-social-message" class="min-h-5 break-words text-xs" style="color:var(--cyan)" role="status"></p>
+                    <label class="field">Display name
+                        <input id="profile-edit-name" type="text" maxlength="32" required>
+                    </label>
+                    <div class="field"><label for="profile-edit-avatar">Avatar</label>
+                        <div id="avatar-picker" class="avatar-picker hidden" role="radiogroup" aria-label="Avatar"></div>
+                        <select id="profile-edit-avatar" class="w-full mt-1.5">
+                            <option>🧃</option><option>💿</option><option>🌙</option><option>⭐</option><option>🧊</option><option>🕊️</option><option>🦋</option><option>🎧</option><option>💎</option><option>🖤</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <button type="submit" class="btn btn-primary">Save Profile</button>
+                        <button type="button" onclick="signOut()" class="btn btn-secondary">Sign Out</button>
+                    </div>
+                    <p id="profile-message" class="min-h-5 text-sm" style="color:var(--cyan)" role="status"></p>
+                </form>
+                </div>
+                <div id="account-achievements-panel" role="tabpanel" aria-labelledby="account-achievements-tab" class="hidden space-y-5">
+                    <div>
+                        <p class="kicker">Your trophy room</p>
+                        <h2 class="section-title mt-2">Chase the next milestone</h2>
+                        <p id="achievement-summary" class="sub mt-2" role="status">0 of 50 unlocked</p>
+                        <progress id="achievement-overall" max="50" value="0" aria-label="Achievements unlocked" class="mt-3"></progress>
+                        <p class="tiny mt-2">Earned badges stay unlocked. Existing stats count; first-attempt and Hard-mode wins are tracked from this update.</p>
+                    </div>
+                    <label class="setting-row font-semibold">Show achievements
+                        <select id="achievement-filter" onchange="renderAchievements()">
+                            <option value="all">All achievements</option>
+                            <option value="unlocked">Unlocked</option>
+                            <option value="locked">In progress</option>
+                            <option value="closest">Closest to unlocking</option>
+                        </select>
+                    </label>
+                    <div id="achievement-list" class="ach-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-settings" class="hidden">
+            <div class="settings-layout">
+                <div class="card card-pad space-y-5 min-w-0">
+                    <div class="card-head">
+                        <div><h2 class="section-title">Settings</h2><p class="sub mt-1">GRAIL'D <span id="settings-current-version">0.8.0</span></p></div>
+                        <span id="update-status-pill" class="status-pill" data-tone="idle">Not checked yet</span>
+                    </div>
+                    <h3 class="card-title">Beta updates</h3>
+                    <form onsubmit="event.preventDefault(); saveUpdateSettings()" class="space-y-4">
+                        <label class="field">GitHub repository
+                            <input id="update-repository" maxlength="140" placeholder="owner/repository">
+                        </label>
+                        <label class="field">Release channel
+                            <select id="update-channel"><option value="beta">Beta (includes prereleases)</option><option value="stable">Stable</option></select>
+                        </label>
+                        <label class="toggle"><input id="update-automatic" type="checkbox" checked>Check automatically when GRAIL'D starts</label>
+                        <div class="flex flex-wrap gap-3"><button type="submit" class="btn btn-primary">Save update settings</button><button id="manual-update-check" type="button" onclick="manualUpdateCheck()" class="btn btn-secondary">Check for Updates</button></div>
+                    </form>
+                    <p id="update-settings-status" class="text-sm" style="color:var(--cyan)" role="status"></p>
+                    <p id="update-last-result" class="small"></p>
+                    <p class="tiny">Updates are installed after GRAIL'D closes. Your account, sign-in, music preferences, and Canary cache stay in your app data folder.</p>
+                </div>
+                <div class="card card-pad space-y-3 min-w-0">
+                    <h3 class="card-title">Keyboard shortcuts</h3>
+                    <p class="small">Work anywhere in the app unless noted.</p>
+                    <ul id="settings-shortcuts" class="shortcut-list"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+        <p>JuiceSpot • Unreleased Grail Guessing Game</p>
+        <p class="credit">made by ⁹⁹⁹DAVID⁹⁹⁹</p>
+    </footer>
+    </div>
+    </div>
+
+    <aside id="update-notification" class="hidden update-toast" aria-labelledby="update-heading" aria-live="polite">
+        <h2 id="update-heading" class="text-lg font-black">GRAIL'D update <span id="update-version"></span></h2>
+        <p id="update-status" class="mt-2 text-sm" style="color:var(--cyan-2)"></p>
+        <p id="update-notes" class="mt-3 max-h-40 overflow-y-auto whitespace-pre-wrap text-xs" style="color:var(--muted)"></p>
+        <progress id="update-progress" max="100" value="0" aria-label="Update download progress" class="hidden mt-3"></progress>
+        <div class="mt-4 flex flex-wrap gap-3"><button id="update-now" type="button" onclick="updateNow()" class="btn btn-primary btn-sm">Update Now</button><button id="update-later" type="button" onclick="updateLater()" class="btn btn-secondary btn-sm">Later</button><button id="update-cancel" type="button" onclick="cancelUpdateDownload()" class="btn btn-danger btn-sm hidden">Cancel download</button></div>
+    </aside>
+
+    <dialog id="song-information" aria-labelledby="song-info-heading" class="modal">
+        <div class="flex items-center justify-between gap-4"><h2 id="song-info-heading" class="text-xl font-black">Song Information</h2><button type="button" onclick="document.getElementById('song-information').close()" class="btn btn-secondary btn-sm">Close</button></div>
+        <p id="song-info-status" class="mt-3 text-sm" style="color:var(--cyan)" role="status"></p>
+        <div id="song-info-content" class="mt-4 space-y-4"></div>
+        <form id="song-match-search-form" class="hidden mt-5 flex flex-wrap gap-2" onsubmit="event.preventDefault(); searchLocalCanary()">
+            <label class="field flex-1 min-w-[200px]">Search another title or alias<input id="song-match-query" maxlength="200" required></label>
+            <button type="submit" class="btn btn-purple self-end">Find recordings</button>
+        </form>
+    </dialog>
+
+    <dialog id="command-palette" class="palette" aria-label="Command palette">
+        <div class="palette-input"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg><input id="palette-input" type="text" placeholder="Jump to a screen, a game, an era or a song..." autocomplete="off" aria-label="Search commands and songs" role="combobox" aria-expanded="true" aria-controls="palette-list"><kbd>Esc</kbd></div>
+        <div id="palette-list" class="palette-list" role="listbox"></div>
+    </dialog>
+
+    <dialog id="shortcuts-dialog" class="modal" style="max-width:440px" aria-labelledby="shortcuts-heading">
+        <div class="flex items-center justify-between gap-4"><h2 id="shortcuts-heading" class="text-xl font-black">Keyboard shortcuts</h2><button type="button" onclick="document.getElementById('shortcuts-dialog').close()" class="btn btn-secondary btn-sm">Close</button></div>
+        <ul id="dialog-shortcuts" class="shortcut-list mt-4"></ul>
+    </dialog>
+
+    <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
+
+    <script>
+        const tabIds = ['hub', 'game', 'catalog', 'leaderboard', 'account', 'settings'];
+        let appState = null;
+        let catalogSongs = [];
+        let catalogFilter = 'all';
+        let socialPollTimer = null;
+        let snippetPlaybackTimer = null;
+        let achievementState = {entries: [], unlocked: 0, total: 50};
+
+        function uiHook(name, ...args) {
+            let value;
+            for (const extra of [window.GraildUI, window.GraildChallenges]) {
+                try {
+                    const result = extra?.[name]?.(...args);
+                    if (value === undefined) value = result;
+                } catch (error) { console.error(`GRAIL'D interface hook failed: ${name}`, error); }
+            }
+            return value;
+        }
+
+        function stateCard({icon = 'i-disc', title, body = '', tone = '', action = null}) {
+            const card = document.createElement('div');
+            card.className = `state-card${tone ? ` is-${tone}` : ''}`;
+            const badge = document.createElement('span');
+            badge.className = 'state-icon';
+            badge.innerHTML = `<svg class="icon" aria-hidden="true"><use href="#${icon}"></use></svg>`;
+            const heading = document.createElement('h4');
+            heading.textContent = title;
+            card.append(badge, heading);
+            if (body) {
+                const text = document.createElement('p');
+                text.textContent = body;
+                card.append(text);
+            }
+            if (action) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `btn btn-sm ${tone === 'error' ? 'btn-secondary' : 'btn-primary'}`;
+                button.textContent = action.label;
+                button.addEventListener('click', action.onClick);
+                card.append(button);
+            }
+            return card;
+        }
+
+        function skeletonRows(count) {
+            const box = document.createElement('div');
+            box.className = 'skeleton-rows';
+            for (let index = 0; index < count; index += 1) {
+                const row = document.createElement('div');
+                row.className = 'skeleton';
+                box.append(row);
+            }
+            return box;
+        }
+
+        function switchTab(tabId) {
+            const nextPanel = document.getElementById('tab-' + tabId);
+            if (!nextPanel || !nextPanel.classList.contains('hidden')) return;
+            tabIds.forEach(id => {
+                document.getElementById('tab-' + id).classList.toggle('hidden', id !== tabId);
+                const navButton = document.getElementById('btn-' + id);
+                if (navButton) navButton.className = id === tabId ? 'nav-btn is-active bg-purple-600' : 'nav-btn';
+            });
+            nextPanel.classList.remove('tab-panel-enter');
+            void nextPanel.offsetWidth;
+            nextPanel.classList.add('tab-panel-enter');
+            window.scrollTo(0, 0);
+            uiHook('onTab', tabId);
+            if (tabId === 'leaderboard') refreshGlobalLeaderboard();
+        }
+
+        function showFeedback(message, success = false) {
+            const banner = document.getElementById('feedback-banner');
+            banner.textContent = message;
+            banner.className = `feedback ${success ? 'is-ok' : 'is-bad'}`;
+            uiHook('onFeedback');
+        }
+
+        function showAuthForm(mode) {
+            const registering = mode === 'register';
+            document.getElementById('sign-in-form').classList.toggle('hidden', registering);
+            document.getElementById('register-form').classList.toggle('hidden', !registering);
+            document.getElementById('signin-tab').className = registering ? 'seg-btn' : 'seg-btn is-active';
+            document.getElementById('register-tab').className = registering ? 'seg-btn is-active' : 'seg-btn';
+        }
+
+        function renderAccountState(authState) {
+            const globalGeneration = ++globalTagGeneration;
+            tagAccountRequest += 1;
+            const signedIn = authState.authenticated === true && authState.profile;
+            globalTagCanManage = Boolean(signedIn && authState.profile.is_creator);
+            document.getElementById('auth-card').classList.toggle('hidden', Boolean(signedIn));
+            document.getElementById('profile-card').classList.toggle('hidden', !signedIn);
+            if (!signedIn) {
+                document.getElementById('profile-tags').replaceChildren();
+                document.getElementById('tag-management').classList.add('hidden');
+                document.getElementById('tag-account-select').replaceChildren();
+                showAuthForm('signin');
+                switchAccountTab('profile');
+                achievementState = {entries: [], unlocked: 0, total: 50};
+                renderAchievements();
+                currentProfileName = '';
+                uiHook('onAccount', authState);
+                return;
+            }
+            achievementState = authState.achievements || {entries: [], unlocked: 0, total: 50};
+            renderAchievements();
+            const profile = authState.profile;
+            document.getElementById('profile-avatar').textContent = profile.avatar;
+            document.getElementById('profile-display-name').textContent = profile.display_name;
+            document.getElementById('profile-owner-tag').classList.toggle('hidden', !profile.is_creator);
+            renderProfileTags(profile.tags || []);
+            document.getElementById('tag-management').classList.toggle('hidden', !profile.is_creator);
+            if (profile.is_creator) loadTagAccounts();
+            else document.getElementById('tag-account-select').replaceChildren();
+            document.getElementById('profile-username').textContent = `@${profile.username}`;
+            document.getElementById('profile-created').textContent = `Member since ${new Date(profile.created_at).toLocaleDateString()}`;
+            document.getElementById('profile-connected-providers').textContent = profile.linked_providers.length
+                ? `Connected: ${profile.linked_providers.map(name => name[0].toUpperCase() + name.slice(1)).join(', ')}`
+                : 'No connected accounts';
+            document.getElementById('profile-correct').textContent = profile.total_correct;
+            document.getElementById('profile-wrong').textContent = profile.total_wrong;
+            document.getElementById('profile-accuracy').textContent = `${profile.accuracy}%`;
+            document.getElementById('profile-current-streak').textContent = profile.current_streak;
+            document.getElementById('profile-best-streak').textContent = profile.best_streak;
+            document.getElementById('profile-points').textContent = profile.total_points;
+            document.getElementById('profile-songs-played').textContent = profile.songs_played;
+            document.getElementById('profile-grails').textContent = profile.grails_collected;
+            document.getElementById('profile-edit-name').value = profile.display_name;
+            document.getElementById('profile-edit-avatar').value = profile.avatar;
+            document.getElementById('global-player-id').textContent = profile.global_player_id ? `Global account: ${profile.global_player_id}` : '';
+            currentProfileName = profile.display_name;
+            uiHook('onAccount', authState);
+            refreshGlobalTags(globalGeneration);
+        }
+
+        let currentProfileName = '';
+        let tagAccountRequest = 0;
+        let globalTagGeneration = 0;
+        let globalTagSyncRequest = 0;
+        let globalTagCanManage = false;
+
+        async function refreshGlobalTags(generation) {
+            const request = ++globalTagSyncRequest;
+            const status = document.getElementById('global-tags-status');
+            status.textContent = 'Syncing global tags...';
+            try {
+                const result = await window.pywebview.api.sync_global_tags();
+                if (generation !== globalTagGeneration || request !== globalTagSyncRequest) return;
+                status.textContent = result.message;
+                if (!result.success) return;
+                globalTagCanManage = result.can_manage_tags === true;
+                renderProfileTags(result.tags || []);
+                document.getElementById('global-player-id').textContent = `Global account: ${result.player_id}`;
+                document.getElementById('profile-owner-tag').classList.toggle('hidden', !result.tags.some(tag => tag.id === 'owner'));
+                document.getElementById('tag-management').classList.toggle('hidden', !result.can_manage_tags);
+                if (result.can_manage_tags) { await loadTagCatalog(); loadTagAccounts(); }
+            } catch (error) {
+                if (generation === globalTagGeneration && request === globalTagSyncRequest) status.textContent = 'Global tags could not be refreshed. Your last synced tags are shown.';
+            }
+        }
+
+        function renderProfileTags(tags) {
+            const container = document.getElementById('profile-tags');
+            container.replaceChildren();
+            for (const tag of tags.filter(item => item.id !== 'owner')) {
+                const badge = document.createElement('span');
+                badge.className = 'profile-tag';
+                badge.dataset.kind = tag.kind;
+                badge.tabIndex = 0;
+                badge.textContent = tag.name;
+                const description = document.createElement('span');
+                description.className = 'tag-tooltip';
+                description.id = `profile-tag-description-${container.children.length}`;
+                description.setAttribute('role', 'tooltip');
+                description.textContent = tag.description;
+                badge.setAttribute('aria-describedby', description.id);
+                badge.append(description);
+                container.append(badge);
+            }
+            const topEarner = tags.some(tag => tag.id === 'top_earner');
+            document.getElementById('top-earner-progress').textContent = topEarner
+                ? 'Top earner unlocked: you earned all 50 achievements.'
+                : achievementState.unlocked === 50 ? 'All 50 achievements unlocked. Sync global tags to recognize Top earner on your account.'
+                : `Top earner: unlock all 50 achievements to earn this tag (${achievementState.unlocked}/50).`;
+        }
+
+        async function loadTagAccounts() {
+            const request = ++tagAccountRequest;
+            const select = document.getElementById('tag-account-select');
+            const previous = select.value;
+            const status = document.getElementById('tag-management-status');
+            select.disabled = true;
+            document.getElementById('tag-assign-button').disabled = true;
+            document.getElementById('tag-remove-button').disabled = true;
+            try {
+                const result = await window.pywebview.api.get_tag_accounts();
+                if (request !== tagAccountRequest) return;
+                select.replaceChildren();
+                if (!result.success) { status.textContent = result.message; return; }
+                for (const account of result.accounts) {
+                    const option = document.createElement('option');
+                    option.value = account.player_id;
+                    option.textContent = `${account.display_name} (${account.provider}, ${account.player_id.slice(0, 8)})${account.beta_tester ? ' — Beta Tester' : ''}`;
+                    option.title = account.player_id;
+                    select.append(option);
+                }
+                if (Array.from(select.options).some(option => option.value === previous)) select.value = previous;
+                select.disabled = !select.options.length;
+                document.getElementById('tag-assign-button').disabled = select.disabled;
+                document.getElementById('tag-remove-button').disabled = select.disabled;
+            } catch (error) {
+                if (request === tagAccountRequest) status.textContent = 'Could not load accounts. Reopen your profile to retry.';
+            }
+        }
+
+        async function assignTesterTag(assigned) {
+            const status = document.getElementById('tag-management-status');
+            const username = document.getElementById('tag-account-select').value;
+            if (!username) return;
+            const request = tagAccountRequest;
+            document.getElementById('tag-assign-button').disabled = true;
+            document.getElementById('tag-remove-button').disabled = true;
+            status.textContent = 'Saving tag...';
+            try {
+                const result = await window.pywebview.api.set_account_tag(username, selectedTagId, assigned);
+                if (request !== tagAccountRequest) return;
+                status.textContent = result.message;
+                if (result.success) renderAccountState(await window.pywebview.api.get_account_state());
+                else await loadTagAccounts();
+            } catch (error) {
+                if (request !== tagAccountRequest) return;
+                status.textContent = 'Could not save the tag. Please retry.';
+                await loadTagAccounts();
+            }
+        }
+
+        async function assignDiscordTesterTag(assigned) {
+            const generation = globalTagGeneration;
+            const status = document.getElementById('tag-management-status');
+            const input = document.getElementById('tag-discord-id');
+            const buttons = [document.getElementById('discord-tag-assign'), document.getElementById('discord-tag-remove')];
+            if (!input.value.trim() || buttons.some(button => button.disabled)) return;
+            buttons.forEach(button => button.disabled = true);
+            status.textContent = 'Saving Discord account tag...';
+            try {
+                const result = await window.pywebview.api.set_discord_account_tag(input.value.trim(), selectedTagId, assigned);
+                if (generation !== globalTagGeneration) return;
+                status.textContent = result.message;
+                if (result.success) { await loadTagAccounts(); await refreshGlobalTags(generation); }
+            } catch (error) {
+                if (generation === globalTagGeneration) status.textContent = 'Could not save the Discord tag. Please retry.';
+            } finally {
+                buttons.forEach(button => button.disabled = false);
+            }
+        }
+
+        async function assignLeaderboardTag(button, playerId, assigned, tagId = selectedTagId) {
+            const generation = globalTagGeneration;
+            const status = document.getElementById('global-status');
+            button.disabled = true;
+            try {
+                const result = await window.pywebview.api.set_account_tag(playerId, tagId, assigned);
+                if (generation !== globalTagGeneration) return;
+                if (result.success) await refreshGlobalLeaderboard();
+                status.textContent = result.message;
+            } catch (error) {
+                if (generation === globalTagGeneration) status.textContent = 'Could not save the tag. Refresh and retry.';
+            } finally { button.disabled = false; }
+        }
+
+        let selectedTagId = 'beta_tester';
+        let assignableTags = [{id:'beta_tester', name:'Beta Tester'}];
+        let tagCatalogRequest = 0;
+
+        async function loadTagCatalog(preferredId = selectedTagId) {
+            const generation = globalTagGeneration;
+            const request = ++tagCatalogRequest;
+            try {
+                const result = await window.pywebview.api.get_tag_catalog();
+                if (generation !== globalTagGeneration || request !== tagCatalogRequest || !result.success || !Array.isArray(result.entries)) return;
+                assignableTags = result.entries;
+                selectedTagId = assignableTags.some(tag => tag.id === preferredId) ? preferredId : 'beta_tester';
+                const select = document.getElementById('tag-definition-select');
+                select.replaceChildren();
+                for (const tag of assignableTags) {
+                    const option = document.createElement('option');
+                    option.value = tag.id; option.textContent = tag.name; option.title = tag.description || '';
+                    select.append(option);
+                }
+                select.value = selectedTagId;
+            } catch (error) { /* Existing assigned tags remain usable if the catalog is offline. */ }
+        }
+
+        async function createCustomTag() {
+            const generation = globalTagGeneration;
+            const button = document.getElementById('custom-tag-create');
+            if (button.disabled) return;
+            button.disabled = true;
+            const status = document.getElementById('tag-management-status');
+            try {
+                const result = await window.pywebview.api.create_custom_tag(
+                    document.getElementById('custom-tag-name').value.trim(),
+                    document.getElementById('custom-tag-description').value.trim());
+                if (generation !== globalTagGeneration) return;
+                status.textContent = result.message;
+                if (result.success) {
+                    await loadTagCatalog(result.tag.id);
+                    document.getElementById('custom-tag-name').value = '';
+                    document.getElementById('custom-tag-description').value = '';
+                }
+            } catch (error) {
+                if (generation === globalTagGeneration) status.textContent = 'Could not create the custom tag. Please retry.';
+            } finally { button.disabled = false; }
+        }
+
+        function switchAccountTab(tab) {
+            for (const name of ['profile', 'achievements']) {
+                const active = tab === name;
+                document.getElementById(`account-${name}-panel`).classList.toggle('hidden', !active);
+                const button = document.getElementById(`account-${name}-tab`);
+                button.setAttribute('aria-selected', String(active));
+                button.className = active ? 'seg-btn is-active' : 'seg-btn';
+            }
+        }
+
+        function renderAchievements() {
+            const {entries, unlocked, total} = achievementState;
+            document.getElementById('achievement-tab-count').textContent = `${unlocked}/${total}`;
+            document.getElementById('achievement-summary').textContent = `${unlocked} of ${total} unlocked`;
+            document.getElementById('achievement-overall').value = unlocked;
+            const filter = document.getElementById('achievement-filter').value;
+            const list = document.getElementById('achievement-list');
+            list.replaceChildren();
+            let shown = entries;
+            if (filter === 'unlocked') shown = entries.filter(item => item.unlocked);
+            if (filter === 'locked') shown = entries.filter(item => !item.unlocked);
+            if (filter === 'closest') {
+                shown = entries.filter(item => !item.unlocked && item.target > 0)
+                    .sort((a, b) => b.progress / b.target - a.progress / a.target).slice(0, 12);
+            }
+            for (const item of shown) {
+                const card = document.createElement('article');
+                card.className = item.unlocked ? 'ach-card is-won' : 'ach-card';
+                const category = document.createElement('p');
+                category.className = 'cat';
+                category.textContent = item.category;
+                const title = document.createElement('h3');
+                title.textContent = `${item.unlocked ? '\u2605' : '\u25c7'} ${item.name}`;
+                const description = document.createElement('p');
+                description.className = 'desc';
+                description.textContent = item.description;
+                const progress = document.createElement('progress');
+                progress.max = item.target;
+                progress.value = item.progress;
+                progress.setAttribute('aria-label', item.name);
+                const status = document.createElement('p');
+                status.className = 'prog';
+                status.textContent = item.unlocked
+                    ? `Unlocked ${new Date(item.unlocked_at).toLocaleDateString()}`
+                    : `${item.progress.toLocaleString()} / ${item.target.toLocaleString()}`;
+                card.append(category, title, description, progress, status);
+                list.append(card);
+            }
+            if (!list.childElementCount) {
+                list.append(stateCard({icon: 'i-trophy',
+                    title: filter === 'unlocked' ? 'Your first trophy is waiting' : 'Nothing to show here',
+                    body: filter === 'unlocked' ? 'Play a round to get started.' : 'No achievements to show for this filter.'}));
+            }
+        }
+
+        async function connectSocial(provider) {
+            const profileView = !document.getElementById('profile-card').classList.contains('hidden');
+            const statusNode = document.getElementById(profileView ? 'profile-social-message' : 'auth-social-message');
+            statusNode.textContent = `Starting ${provider} authorization...`;
+            try {
+                const started = await window.pywebview.api.start_social_auth(provider);
+                if (!started.success) {
+                    statusNode.textContent = started.message;
+                    return;
+                }
+                statusNode.textContent = started.message;
+                if (socialPollTimer) window.clearInterval(socialPollTimer);
+                const deadline = Date.now() + 180000;
+                socialPollTimer = window.setInterval(async () => {
+                    try {
+                        const result = await window.pywebview.api.get_social_auth_status();
+                        if (result.status !== 'complete' && Date.now() < deadline) return;
+                        window.clearInterval(socialPollTimer);
+                        socialPollTimer = null;
+                        statusNode.textContent = result.message || 'Provider sign-in timed out.';
+                        if (!result.success) return;
+                        if (result.registration_required) {
+                            showAuthForm('register');
+                            switchTab('account');
+                            document.getElementById('register-username').focus();
+                            document.getElementById('auth-social-message').textContent = result.email
+                                ? `${result.message} Verified email: ${result.email}`
+                                : result.message;
+                            return;
+                        }
+                        if (result.authenticated) {
+                            renderAccountState(result);
+                            renderState(await window.pywebview.api.get_state());
+                            await refreshLeaderboard();
+                            document.getElementById('profile-social-message').textContent = result.message;
+                            switchTab('account');
+                        }
+                    } catch (error) {
+                        window.clearInterval(socialPollTimer);
+                        socialPollTimer = null;
+                        statusNode.textContent = `Provider sign-in failed: ${error.message}`;
+                    }
+                }, 700);
+            } catch (error) {
+                statusNode.textContent = `Could not connect ${provider}: ${error.message}`;
+            }
+        }
+
+        async function signIn(event) {
+            event.preventDefault();
+            const message = document.getElementById('auth-message');
+            try {
+                const result = await window.pywebview.api.sign_in(
+                    document.getElementById('signin-username').value,
+                    document.getElementById('signin-password').value
+                );
+                message.textContent = result.message;
+                if (!result.success) return;
+                document.getElementById('signin-password').value = '';
+                renderAccountState(result);
+                renderState(await window.pywebview.api.get_state());
+                await refreshLeaderboard();
+                document.getElementById('profile-message').textContent = result.message;
+            } catch (error) {
+                message.textContent = `Sign-in failed: ${error.message}`;
+            }
+        }
+
+        async function registerAccount(event) {
+            event.preventDefault();
+            const message = document.getElementById('auth-message');
+            try {
+                const result = await window.pywebview.api.register_account(
+                    document.getElementById('register-username').value,
+                    document.getElementById('register-password').value
+                );
+                message.textContent = result.message;
+                if (!result.success) return;
+                document.getElementById('register-password').value = '';
+                renderAccountState(result);
+                renderState(await window.pywebview.api.get_state());
+                await refreshLeaderboard();
+                document.getElementById('profile-message').textContent = result.message;
+            } catch (error) {
+                message.textContent = `Account creation failed: ${error.message}`;
+            }
+        }
+
+        async function saveProfile(event) {
+            event.preventDefault();
+            const message = document.getElementById('profile-message');
+            try {
+                const result = await window.pywebview.api.update_profile(
+                    document.getElementById('profile-edit-name').value,
+                    document.getElementById('profile-edit-avatar').value
+                );
+                message.textContent = result.message;
+                if (result.success) renderAccountState(result);
+            } catch (error) {
+                message.textContent = `Profile update failed: ${error.message}`;
+            }
+        }
+
+        async function signOut() {
+            const result = await window.pywebview.api.sign_out();
+            renderAccountState({authenticated: false});
+            renderState(await window.pywebview.api.get_state());
+            await refreshLeaderboard();
+            document.getElementById('auth-message').textContent = result.message;
+            document.getElementById('profile-message').textContent = '';
+            switchTab('account');
+        }
+
+        let blockingFeedback = '';
+
+        function renderState(state) {
+            document.getElementById('game-resume-status').textContent = state.resume_error
+                ? 'Could not save this round. Keep the app open and try again before closing.'
+                : 'Your current round saves automatically. Return here to resume it.';
+            appState = state;
+            resetSnippetButton();
+            const randomMode = state.game_mode === 'random';
+            for (const mode of ['classic', 'random']) {
+                document.getElementById('nav-mode-' + mode).setAttribute('aria-checked', String(mode === state.game_mode));
+            }
+            document.getElementById('game-mode-title').textContent = randomMode ? 'Random Drop' : 'Classic Snippets';
+            document.getElementById('game-mode-description').textContent = randomMode
+                ? 'A random starting point, with longer previews each attempt.'
+                : 'Guess the song from its intro.';
+            updateRecordingEraOptions(state);
+            const durations = state.durations;
+            const attempt = Math.min(state.attempt, durations.length - 1);
+            document.getElementById('current-attempt').textContent = state.has_track ? attempt + 1 : 0;
+            document.getElementById('current-attempt').parentElement.lastChild.textContent = ` of ${durations.length}`;
+            document.getElementById('snippet-sec').textContent = durations[attempt] || 0;
+            document.getElementById('game-score').textContent = `Score: ${state.score}`;
+            document.getElementById('game-streak').textContent = state.streak;
+            document.getElementById('session-score').textContent = `${state.score} pts`;
+            document.getElementById('session-streak').textContent = state.streak;
+            document.getElementById('session-correct-guesses').textContent = state.correct_guesses;
+            document.getElementById('session-wrong-guesses').textContent = state.wrong_guesses;
+            document.getElementById('next-round-btn').classList.toggle('hidden', !state.game_over);
+            document.getElementById('session-tracks').textContent = state.track_count;
+            document.getElementById('library-summary').textContent = `${state.track_count} audio tracks`;
+            document.getElementById('folder-summary').textContent = state.folder;
+            document.getElementById('catalog-summary').textContent = `${state.track_count} tracks in ${state.folder}`;
+            document.getElementById('difficulty-select').value = state.difficulty;
+            document.getElementById('difficulty-select').disabled =
+                !state.authenticated || !state.has_track || state.game_over;
+            document.getElementById('volume-control').value = state.volume;
+            document.getElementById('volume-value').textContent = `${state.volume}%`;
+            document.querySelectorAll('#play-btn, #guess-input, #input-area button').forEach(button => {
+                button.disabled = !state.authenticated || !state.has_track || state.game_over;
+            });
+            document.getElementById('reroll-btn').disabled =
+                !state.authenticated || !state.has_track || state.game_over || (state.eligible_track_count ?? state.track_count) < 2;
+            document.querySelectorAll('#timeline-bars > div').forEach((bar, index) => {
+                bar.classList.toggle('bg-purple-500', index <= attempt && state.has_track);
+                bar.classList.toggle('bg-slate-700', index > attempt || !state.has_track);
+                bar.classList.toggle('hidden', index >= durations.length);
+            });
+            if (!state.authenticated) {
+                blockingFeedback = 'Sign in to play and save your profile statistics.';
+                showFeedback(blockingFeedback);
+            } else if (!state.has_track) {
+                blockingFeedback = state.error || 'Choose a folder containing audio files.';
+                showFeedback(blockingFeedback);
+            } else if (blockingFeedback === document.getElementById('feedback-banner').textContent) {
+                showFeedback('');
+            }
+            uiHook('onState', state);
+            renderCatalogIfWaiting();
+        }
+
+        async function chooseMusicFolder() {
+            try {
+                const result = await window.pywebview.api.select_music_folder();
+                renderState(result.state);
+                await refreshCatalog();
+                watchAutomaticEraScan();
+                await refreshLeaderboard();
+                if (result.message) {
+                    showFeedback(result.message, result.state.track_count > 0);
+                    uiHook('toast', result.message, result.state.track_count > 0 ? '' : 'bad');
+                }
+            } catch (error) {
+                showFeedback(`Could not select a music folder: ${error.message}`);
+                uiHook('toast', `Could not select a music folder: ${error.message}`, 'bad');
+            }
+        }
+
+        let changingGameMode = false;
+
+        function setGameMenu(open) {
+            document.getElementById('game-mode-menu').hidden = !open;
+            document.getElementById('game-menu-toggle').setAttribute('aria-expanded', String(open));
+        }
+
+        function handleGameMenuKey(event) {
+            if (event.key === 'Escape') {
+                event.preventDefault(); setGameMenu(false);
+                document.getElementById('game-menu-toggle').focus();
+            } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault(); setGameMenu(true);
+                const items = Array.from(document.querySelectorAll('#game-mode-menu button'));
+                const index = items.indexOf(document.activeElement);
+                const next = index < 0 ? (event.key === 'ArrowDown' ? 0 : items.length - 1)
+                    : (index + (event.key === 'ArrowDown' ? 1 : items.length - 1)) % items.length;
+                items[next].focus();
+            }
+        }
+
+        async function chooseNavGameMode(mode) {
+            setGameMenu(false);
+            if (!appState || !appState.authenticated) { await startGameMode(mode); return; }
+            await changeGameMode(mode);
+            switchTab('game');
+        }
+
+        document.addEventListener('pointerdown', event => {
+            if (!document.getElementById('game-nav').contains(event.target)) setGameMenu(false);
+        });
+
+        async function changeGameMode(mode) {
+            if (changingGameMode || !appState || mode === appState.game_mode) return;
+            changingGameMode = true;
+            document.querySelectorAll('#game-mode-menu button').forEach(button => button.disabled = true);
+            try {
+                await startGameMode(mode);
+            } finally {
+                changingGameMode = false;
+                document.querySelectorAll('#game-mode-menu button').forEach(button => button.disabled = false);
+            }
+        }
+
+        async function startGameMode(mode) {
+            if (!appState || !appState.authenticated) {
+                switchTab('account');
+                document.getElementById('auth-message').textContent = 'Sign in to play a game.';
+                return;
+            }
+            uiHook('onLeaveChallenge');
+            const message = document.getElementById('mode-message');
+            try {
+                const state = await window.pywebview.api.set_game_mode(mode);
+                renderState(state);
+                resetSnippetButton();
+                document.getElementById('guess-input').value = '';
+                document.getElementById('suggestions').classList.add('hidden');
+                document.getElementById('cover-container').classList.add('hidden');
+                showFeedback(state.has_track ? '' : 'Choose a music folder to start.');
+                message.textContent = '';
+                switchTab('game');
+            } catch (error) {
+                message.textContent = 'Could not start the game. Please try again.';
+                showFeedback(message.textContent);
+            }
+        }
+
+        async function changeDifficulty(difficulty) {
+            renderState(await window.pywebview.api.set_difficulty(difficulty));
+            showFeedback('New round started.', true);
+        }
+
+        async function changeVolume(value) {
+            document.getElementById('volume-value').textContent = `${value}%`;
+            const result = await window.pywebview.api.set_volume(Number(value) / 100);
+            if (result.error) showFeedback(result.error);
+        }
+
+        function resetSnippetButton() {
+            window.clearTimeout(snippetPlaybackTimer);
+            document.getElementById('snippet-play-label').textContent = 'PLAY';
+            document.getElementById('snippet-play-icon').textContent = '\u25b6';
+            uiHook('onPlayEnd');
+        }
+
+        async function playSnippetSimulation() {
+            const button = document.getElementById('play-btn');
+            const result = await window.pywebview.api.play_snippet();
+            if (!result.ok) {
+                if (result.state) {
+                    renderState(result.state);
+                    await refreshCatalog();
+                }
+                showFeedback(result.message);
+                return;
+            }
+            resetSnippetButton();
+            document.getElementById('snippet-play-label').textContent = 'PLAYING';
+            document.getElementById('snippet-play-icon').textContent = '\u266b';
+            uiHook('onPlay', result.duration);
+            snippetPlaybackTimer = window.setTimeout(resetSnippetButton, result.duration * 1000);
+        }
+
+        let suggestionIndex = -1;
+        let roundActionPending = false;
+
+        function hideSuggestions() {
+            document.getElementById('suggestions').classList.add('hidden');
+            document.getElementById('guess-input').setAttribute('aria-expanded', 'false');
+            suggestionIndex = -1;
+        }
+
+        function handleTyping(event) {
+            const query = event.target.value.trim().toLocaleLowerCase();
+            const box = document.getElementById('suggestions');
+            box.replaceChildren();
+            suggestionIndex = -1;
+            const allMatches = query ? catalogSongs.filter(song => song.title.toLocaleLowerCase().includes(query)) : [];
+            const matches = allMatches.slice(0, 6);
+            if (matches.length) {
+                const head = document.createElement('div');
+                head.className = 'suggest-head tabular';
+                head.textContent = `${allMatches.length.toLocaleString()} match${allMatches.length === 1 ? '' : 'es'}`;
+                box.append(head);
+            }
+            matches.forEach(song => {
+                const item = document.createElement('button');
+                item.type = 'button';
+                item.className = 'suggestion';
+                item.setAttribute('role', 'option');
+                const thumb = document.createElement('span');
+                thumb.className = 'song-thumb';
+                thumb.style.setProperty('--h', songHue(song.title));
+                const label = document.createElement('span');
+                label.className = 'label';
+                const at = song.title.toLocaleLowerCase().indexOf(query);
+                const mark = document.createElement('mark');
+                mark.textContent = song.title.slice(at, at + query.length);
+                label.append(song.title.slice(0, at), mark, song.title.slice(at + query.length));
+                item.append(thumb, label);
+                item.addEventListener('click', () => selectSuggestion(song.title));
+                box.append(item);
+            });
+            box.classList.toggle('hidden', matches.length === 0);
+            event.target.setAttribute('aria-expanded', String(matches.length > 0));
+        }
+
+        function selectSuggestion(title) {
+            document.getElementById('guess-input').value = title;
+            hideSuggestions();
+        }
+
+        function handleGuessKey(event) {
+            const items = [...document.querySelectorAll('#suggestions .suggestion')];
+            const open = !document.getElementById('suggestions').classList.contains('hidden');
+            if (open && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+                event.preventDefault();
+                const step = event.key === 'ArrowDown' ? 1 : -1;
+                suggestionIndex = (suggestionIndex + step + items.length + (suggestionIndex < 0 && step < 0 ? 1 : 0)) % items.length;
+                items.forEach((item, index) => item.classList.toggle('is-active', index === suggestionIndex));
+            } else if (event.key === 'Escape' && open) {
+                event.preventDefault();
+                hideSuggestions();
+            } else if (event.key === 'Enter' && !event.ctrlKey) {
+                event.preventDefault();
+                if (event.repeat) return;
+                if (open && suggestionIndex >= 0) items[suggestionIndex].click();
+                else { hideSuggestions(); submitGuess(); }
+            }
+        }
+
+        async function submitGuess() {
+            const guess = document.getElementById('guess-input').value.trim();
+            if (!guess) {
+                showFeedback('Type a song title first.');
+                return;
+            }
+            if (roundActionPending) return;
+            roundActionPending = true;
+            try {
+                await applyRoundResult(await window.pywebview.api.submit_guess(guess), {kind: 'guess', guess});
+            } finally { roundActionPending = false; }
+        }
+
+        async function rerollSong() {
+            const result = await window.pywebview.api.reroll_song();
+            renderState(result.state);
+            document.getElementById('guess-input').value = '';
+            document.getElementById('suggestions').classList.add('hidden');
+            document.getElementById('cover-container').classList.add('hidden');
+            showFeedback(result.message, result.changed);
+        }
+
+        async function skipAttempt() {
+            if (roundActionPending) return;
+            roundActionPending = true;
+            try {
+                await applyRoundResult(await window.pywebview.api.skip_attempt(), {kind: 'skip'});
+            } finally { roundActionPending = false; }
+        }
+
+        async function applyRoundResult(result, action = {}) {
+            const before = appState;
+            renderState(result.state);
+            await refreshLeaderboard();
+            const profileState = await window.pywebview.api.get_account_state();
+            renderAccountState(profileState);
+            const feedback = result.audio_error
+                ? `${result.message} Audio error: ${result.audio_error}`
+                : result.message || '';
+            showFeedback(feedback, result.success === true && !result.audio_error);
+            if (result.state.game_over) {
+                showCover(result.cover, result.state.title, result.success === true);
+            }
+            uiHook('onRoundResult', result, action, before);
+        }
+
+        async function startNextRound() {
+            const state = await window.pywebview.api.next_round();
+            renderState(state);
+            document.getElementById('guess-input').value = '';
+            document.getElementById('suggestions').classList.add('hidden');
+            document.getElementById('cover-container').classList.add('hidden');
+            showFeedback(state.has_track ? 'New round started.' : state.error || 'No songs are available.', state.has_track);
+            if (state.has_track && !document.getElementById('tab-game').classList.contains('hidden')) document.getElementById('guess-input').focus();
+        }
+
+        function showCover(source, title, correct = false) {
+            const container = document.getElementById('cover-container');
+            const art = document.getElementById('cover-art-inner');
+            container.classList.remove('correct-cover-reveal');
+            container.classList.toggle('is-miss', !correct);
+            if (correct) void container.offsetWidth;
+            art.replaceChildren();
+            if (source) {
+                const image = document.createElement('img');
+                image.src = source;
+                image.alt = `${title} cover art`;
+                image.className = 'w-full h-full object-cover rounded-xl';
+                art.append(image);
+            } else {
+                art.textContent = '💿';
+            }
+            document.getElementById('correct-song-title').textContent = title;
+            container.classList.remove('hidden');
+            if (correct) container.classList.add('correct-cover-reveal');
+        }
+
+        let catalogLoaded = false;
+        let catalogLoadError = '';
+        let catalogView = 'local';
+        let catalogStatus = 'all';
+        let catalogLayout = 'grid';
+        const CATALOG_BATCH = 120;
+        let catalogLimit = CATALOG_BATCH;
+        let catalogSignature = '';
+
+        async function refreshCatalog() {
+            try {
+                catalogSongs = await window.pywebview.api.get_catalog();
+                catalogLoadError = '';
+            } catch (error) {
+                catalogLoadError = 'Your songs could not be read. Check the folder is still available, then retry.';
+            }
+            catalogLoaded = true;
+            renderCatalog(catalogFilter);
+            uiHook('onCatalog', catalogSongs);
+        }
+
+        function renderCatalogIfWaiting() {
+            if (catalogLoaded && !catalogSongs.length) renderCatalog(catalogFilter);
+        }
+
+        function globalBoardError() {
+            const list = document.getElementById('global-leaderboard');
+            list.replaceChildren(stateCard({icon: 'i-cloud-off', tone: 'error', title: "Rankings didn't load",
+                body: 'Your own scores are safe. Check your connection and try again.',
+                action: {label: 'Try again', onClick: () => refreshGlobalLeaderboard()}}));
+            uiHook('onGlobalBoard', []);
+        }
+
+        async function refreshGlobalLeaderboard() {
+            const button = document.getElementById('global-refresh');
+            if (button.disabled) return;
+            button.disabled = true;
+            const status = document.getElementById('global-status');
+            const list = document.getElementById('global-leaderboard');
+            status.classList.remove('is-bad');
+            status.textContent = 'Loading global rankings...';
+            if (!list.querySelector('.board-row')) {
+                list.replaceChildren(skeletonRows(5));
+                uiHook('onGlobalBoard', []);
+            }
+            const generation = globalTagGeneration;
+            try {
+                const permissions = await window.pywebview.api.sync_global_tags();
+                if (generation !== globalTagGeneration) return;
+                globalTagCanManage = permissions.success === true && permissions.can_manage_tags === true;
+                if (globalTagCanManage) await loadTagCatalog();
+                const result = await window.pywebview.api.get_global_leaderboard();
+                if (generation !== globalTagGeneration) return;
+                list.replaceChildren();
+                status.textContent = result.message;
+                for (const entry of result.entries || []) {
+                    const row = document.createElement('div');
+                    const mine = entry.player_id && permissions.player_id
+                        ? entry.player_id === permissions.player_id
+                        : Boolean(currentProfileName) && entry.display_name === currentProfileName;
+                    row.className = mine ? 'board-row is-me' : 'board-row';
+                    row.dataset.player = String(entry.display_name).toLocaleLowerCase();
+                    const rank = document.createElement('span');
+                    rank.className = 'board-rank';
+                    rank.textContent = `${entry.rank}.`;
+                    const name = document.createElement('span');
+                    name.className = 'board-name';
+                    name.textContent = entry.display_name;
+                    if (mine) {
+                        const you = document.createElement('span');
+                        you.className = 'you-tag';
+                        you.textContent = 'YOU';
+                        name.append(you);
+                    }
+                    const score = document.createElement('span');
+                    score.className = 'board-points';
+                    score.textContent = `${Number(entry.points).toLocaleString()} pts`;
+                    row.append(rank, name, score);
+                    for (const tag of entry.tags || []) {
+                        const badge = document.createElement('span');
+                        badge.className = 'profile-tag';
+                        badge.textContent = tag.name;
+                        badge.title = tag.description;
+                        badge.tabIndex = 0;
+                        row.append(badge);
+                    }
+                    if (globalTagCanManage && /^[a-f0-9]{64}$/.test(entry.player_id || '')) {
+                        const selector = document.createElement('select');
+                        selector.setAttribute('aria-label', `Tag for ${entry.display_name}`);
+                        for (const tag of assignableTags) {
+                            const option = document.createElement('option');
+                            option.value = tag.id; option.textContent = tag.name; selector.append(option);
+                        }
+                        selector.value = selectedTagId;
+                        const control = document.createElement('button');
+                        control.type = 'button';
+                        control.className = 'btn btn-secondary btn-sm';
+                        const hasTag = () => (entry.tags || []).some(tag => tag.id === selector.value);
+                        const label = () => {
+                            const name = assignableTags.find(tag => tag.id === selector.value)?.name || 'tag';
+                            control.textContent = `${hasTag() ? 'Remove' : 'Assign'} ${name}`;
+                            control.setAttribute('aria-label', `${control.textContent} for ${entry.display_name}`);
+                        };
+                        selector.addEventListener('change', label); label();
+                        control.addEventListener('click', () => assignLeaderboardTag(control, entry.player_id, !hasTag(), selector.value));
+                        row.append(selector, control);
+                    }
+                    list.append(row);
+                }
+                if (!result.success) {
+                    status.classList.add('is-bad');
+                    globalBoardError();
+                } else if (!(result.entries || []).length) {
+                    list.append(stateCard({icon: 'i-trophy', title: 'No scores yet', body: 'Connect your provider and be the first.'}));
+                    uiHook('onGlobalBoard', []);
+                } else {
+                    uiHook('onGlobalBoard', result.entries);
+                    filterGlobalBoard();
+                }
+            } catch (error) {
+                status.classList.add('is-bad');
+                status.textContent = 'Could not load rankings. Refresh to retry.';
+                globalBoardError();
+            } finally {
+                button.disabled = false;
+                list.querySelector('.skeleton-rows')?.remove();
+            }
+        }
+
+        function filterGlobalBoard() {
+            const query = document.getElementById('global-filter').value.trim().toLocaleLowerCase();
+            document.querySelectorAll('#global-leaderboard .board-row').forEach(row => {
+                row.classList.toggle('hidden', Boolean(query) && !row.dataset.player.includes(query));
+            });
+        }
+
+        let songRecords = [];
+        let songRecordsError = false;
+        let songRecordSort = {key: 'title', direction: 1};
+
+        async function refreshLeaderboard() {
+            try {
+                songRecords = await window.pywebview.api.get_song_leaderboard();
+                songRecordsError = false;
+            } catch (error) {
+                songRecordsError = true;
+            }
+            renderSongRecords();
+            uiHook('onSongRecords', songRecords);
+            if (document.getElementById('catalog-sort').value !== 'az' && document.getElementById('catalog-sort').value !== 'za') renderCatalog(catalogFilter);
+        }
+
+        function songAccuracy(song) {
+            const total = song.correct + song.wrong;
+            return total ? song.correct / total : -1;
+        }
+
+        function sortSongRecords(key) {
+            songRecordSort = songRecordSort.key === key
+                ? {key, direction: -songRecordSort.direction}
+                : {key, direction: key === 'title' ? 1 : -1};
+            renderSongRecords();
+        }
+
+        function renderSongRecords() {
+            const leaderboard = document.getElementById('song-leaderboard');
+            const count = document.getElementById('song-record-count');
+            leaderboard.replaceChildren();
+            count.classList.add('hidden');
+            document.querySelectorAll('.record-head button').forEach(button => {
+                if (button.dataset.sort === songRecordSort.key) button.setAttribute('aria-sort', songRecordSort.direction > 0 ? 'ascending' : 'descending');
+                else button.removeAttribute('aria-sort');
+            });
+            if (songRecordsError) {
+                leaderboard.append(stateCard({icon: 'i-alert', tone: 'error', title: "Your records didn't load",
+                    body: 'They are still saved. Try again in a moment.',
+                    action: {label: 'Try again', onClick: () => refreshLeaderboard()}}));
+                return;
+            }
+            if (!songRecords.length) {
+                leaderboard.append(stateCard({icon: 'i-folder', title: 'No songs in the current folder.',
+                    body: 'Choose a music folder and each song will get a record here.',
+                    action: {label: 'Choose a music folder', onClick: () => chooseMusicFolder()}}));
+                return;
+            }
+            const query = document.getElementById('song-record-search').value.trim().toLocaleLowerCase();
+            const {key, direction} = songRecordSort;
+            const value = song => key === 'title' ? song.title.toLocaleLowerCase() : key === 'accuracy' ? songAccuracy(song) : song[key];
+            const songs = songRecords.filter(song => song.title.toLocaleLowerCase().includes(query)).sort((a, b) => {
+                const left = value(a), right = value(b);
+                if (left < right) return -direction;
+                if (left > right) return direction;
+                return a.title.localeCompare(b.title);
+            });
+            if (!songs.length) {
+                leaderboard.append(stateCard({icon: 'i-search', title: 'No songs match your search'}));
+                return;
+            }
+            songs.forEach(song => {
+                const row = document.createElement('div');
+                row.className = 'record-row';
+                const title = document.createElement('span');
+                title.className = 't';
+                title.textContent = song.title;
+                const correct = document.createElement('span');
+                correct.className = 'g r';
+                correct.textContent = song.correct;
+                const wrong = document.createElement('span');
+                wrong.className = 'w r';
+                wrong.textContent = song.wrong;
+                const accuracy = document.createElement('span');
+                accuracy.className = 'acc-cell';
+                const rate = songAccuracy(song);
+                if (rate >= 0) {
+                    const bar = document.createElement('span');
+                    bar.className = 'acc-bar';
+                    const fill = document.createElement('i');
+                    fill.style.width = `${Math.round(rate * 100)}%`;
+                    bar.append(fill);
+                    accuracy.append(bar, `${Math.round(rate * 100)}%`);
+                } else {
+                    accuracy.textContent = 'Not played';
+                    accuracy.style.justifyContent = 'flex-end';
+                }
+                row.append(title, correct, wrong, accuracy);
+                leaderboard.append(row);
+            });
+            count.textContent = query ? `${songs.length.toLocaleString()} of ${songRecords.length.toLocaleString()} songs` : `${songRecords.length.toLocaleString()} songs`;
+            count.classList.remove('hidden');
+        }
+
+        function songEraGroup(song) {
+            if (song.canary || song.canary_era) return 'era';
+            if (song.era_status === 'needs_review' || song.era_status === 'not_found') return 'review';
+            return 'pending';
+        }
+
+        function catalogSorter(mode) {
+            const records = new Map(songRecords.map(song => [song.title, song]));
+            const played = song => { const record = records.get(song.title); return record ? record.correct + record.wrong : 0; };
+            const missed = song => records.get(song.title)?.wrong || 0;
+            const era = song => song.canary?.era || song.canary_era || '';
+            const byTitle = (a, b) => a.title.localeCompare(b.title);
+            if (mode === 'za') return (a, b) => byTitle(b, a);
+            if (mode === 'played') return (a, b) => played(b) - played(a) || byTitle(a, b);
+            if (mode === 'missed') return (a, b) => missed(b) - missed(a) || byTitle(a, b);
+            if (mode === 'era') return (a, b) => (era(a) ? 0 : 1) - (era(b) ? 0 : 1) || era(a).localeCompare(era(b)) || byTitle(a, b);
+            return byTitle;
+        }
+
+        function songHue(title) {
+            let hash = 0;
+            for (const character of title) hash = (hash * 31 + character.codePointAt(0)) % 360;
+            return hash % 4 === 0 ? 72 + hash % 22 : 205 + hash % 36;
+        }
+
+        function syncCatalogChrome() {
+            const local = catalogView === 'local';
+            document.getElementById('catalog-grid').classList.toggle('hidden', !local);
+            document.getElementById('local-format-control').classList.toggle('hidden', !local || !catalogSongs.length);
+            document.getElementById('catalog-toolbar').classList.toggle('hidden', !local || !catalogSongs.length);
+            if (!local) document.getElementById('catalog-foot').classList.add('hidden');
+        }
+
+        function renderCatalogChips(baseSongs) {
+            const box = document.getElementById('catalog-status-chips');
+            const focused = document.activeElement?.dataset?.status;
+            box.replaceChildren();
+            const groups = [['all', 'All songs'], ['era', 'Has era'], ['review', 'Needs review'], ['pending', 'Not checked yet']];
+            for (const [id, label] of groups) {
+                const total = id === 'all' ? baseSongs.length : baseSongs.filter(song => songEraGroup(song) === id).length;
+                if (id !== 'all' && !total && catalogStatus !== id) continue;
+                const chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = 'chip';
+                chip.dataset.status = id;
+                chip.setAttribute('aria-pressed', String(catalogStatus === id));
+                const count = document.createElement('span');
+                count.className = 'count tabular';
+                count.textContent = total.toLocaleString();
+                chip.append(label, count);
+                chip.addEventListener('click', () => { catalogStatus = id; renderCatalog(catalogFilter); });
+                box.append(chip);
+                if (focused === id) chip.focus();
+            }
+        }
+
+        function clearCatalogFilters() {
+            document.getElementById('catalog-search').value = '';
+            catalogStatus = 'all';
+            renderCatalog('all');
+        }
+
+        function setCatalogLayout(layout) {
+            catalogLayout = layout;
+            document.getElementById('catalog-grid').classList.toggle('is-list', layout === 'list');
+            for (const name of ['grid', 'list']) {
+                const button = document.getElementById(`catalog-view-${name}`);
+                button.classList.toggle('is-active', name === layout);
+                button.setAttribute('aria-pressed', String(name === layout));
+            }
+        }
+
+        function showMoreCatalog() {
+            catalogLimit += CATALOG_BATCH;
+            renderCatalog(catalogFilter);
+        }
+
+        function renderCatalog(filter = 'all') {
+            const formatSelect = document.getElementById('catalog-format');
+            const formats = [...new Set(catalogSongs.map(song => song.format))].sort();
+            if (filter !== 'all' && !formats.includes(filter)) filter = 'all';
+            formatSelect.replaceChildren();
+            for (const format of ['all', ...formats]) {
+                const option = document.createElement('option');
+                option.value = format;
+                option.textContent = format === 'all' ? 'All formats' : format;
+                formatSelect.append(option);
+            }
+            formatSelect.value = filter;
+            catalogFilter = filter;
+            const grid = document.getElementById('catalog-grid');
+            const foot = document.getElementById('catalog-foot');
+            const query = document.getElementById('catalog-search').value.trim().toLocaleLowerCase();
+            const sort = document.getElementById('catalog-sort').value;
+            const baseSongs = catalogSongs.filter(song => (filter === 'all' || song.format === filter) && `${song.title} ${song.canary?.era || song.canary_era || ''}`.toLocaleLowerCase().includes(query));
+            renderCatalogChips(baseSongs);
+            const songs = baseSongs.filter(song => catalogStatus === 'all' || songEraGroup(song) === catalogStatus).sort(catalogSorter(sort));
+            const signature = [filter, query, sort, catalogStatus].join('|');
+            if (signature !== catalogSignature) { catalogLimit = CATALOG_BATCH; catalogSignature = signature; }
+            grid.replaceChildren();
+            songs.slice(0, catalogLimit).forEach(song => {
+                const card = document.createElement('article');
+                card.className = 'song-card';
+                const art = document.createElement('div');
+                art.className = 'song-art';
+                art.style.setProperty('--h', songHue(song.title));
+                const disc = document.createElement('span');
+                disc.className = 'mini-disc';
+                const format = document.createElement('span');
+                format.className = 'song-format';
+                format.textContent = song.format;
+                art.append(disc, format);
+                const title = document.createElement('h4');
+                title.className = 'song-title';
+                title.textContent = song.title;
+                const listFormat = document.createElement('p');
+                listFormat.className = 'song-list-format';
+                listFormat.textContent = song.format;
+                const details = document.createElement('div');
+                details.className = 'min-w-0';
+                details.append(title, listFormat);
+                card.append(art, details);
+                addLocalCanaryControls(card, song);
+                grid.append(card);
+            });
+            if (catalogLoadError) {
+                grid.replaceChildren(stateCard({icon: 'i-alert', tone: 'error', title: "Your catalog didn't load", body: catalogLoadError,
+                    action: {label: 'Try again', onClick: () => refreshCatalog()}}));
+            } else if (!catalogSongs.length) {
+                grid.replaceChildren(stateCard({icon: 'i-folder', title: 'No songs yet',
+                    body: appState?.error || 'Choose a folder of audio files and your songs will appear here.',
+                    action: {label: 'Choose a music folder', onClick: () => chooseMusicFolder()}}));
+            } else if (!songs.length) {
+                grid.replaceChildren(stateCard({icon: 'i-search', title: 'No songs match these filters',
+                    body: 'Try a different search, format or era status.',
+                    action: {label: 'Clear filters', onClick: clearCatalogFilters}}));
+            }
+            const hasMore = songs.length > catalogLimit;
+            document.getElementById('catalog-more').classList.toggle('hidden', !hasMore);
+            document.getElementById('catalog-count').textContent = `Showing ${Math.min(catalogLimit, songs.length).toLocaleString()} of ${songs.length.toLocaleString()} songs`;
+            foot.classList.toggle('hidden', !songs.length);
+            syncCatalogChrome();
+        }
+
+        function filterCatalog(format) {
+            renderCatalog(format);
+        }
+
+        window.addEventListener('pywebviewready', async () => {
+            const authState = await window.pywebview.api.get_account_state();
+            renderAccountState(authState);
+            renderState(await window.pywebview.api.get_state());
+            await refreshCatalog();
+            await refreshLeaderboard();
+            watchAutomaticEraScan();
+            if (!authState.authenticated) switchTab('account');
+        });
+    </script>
+    <script src="canary_ui.js"></script>
+    <script src="update_ui.js"></script>
+    <script src="assets/graild-ui.js"></script>
+    <script src="assets/graild-challenges.js"></script>
+</body>
+</html>

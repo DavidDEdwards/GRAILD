@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-11-01T20:36:29.180695+00:00",
+  "discord_connection_tested": false,
+  "profile_integration": "unavailable: no authorised backend endpoint",
+  "read_only": true,
+  "leaderboard": {
+    "tested": true,
+    "success": true,
+    "returned_public_entries": 1
+  },
+  "github": {
+    "tested": true,
+    "success": true,
+    "latest_beta": "v0.9.0_MAC",
+    "published_platforms": {
+      "Apple Silicon Mac": "v0.9.0_MAC",
+      "Intel Mac": "v0.9.0_MAC",
+      "Windows": "v0.8.1"
+    }
+  }
+}

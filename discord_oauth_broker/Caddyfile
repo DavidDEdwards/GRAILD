@@ -1,0 +1,4 @@
+{$BROKER_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy broker:8000
+}
