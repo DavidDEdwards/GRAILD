@@ -1,0 +1,15 @@
+/* Extra styles for the web edition. Everything else comes from the desktop
+   app's assets/tailwind.css and assets/graild-ui.css (copied unchanged). */
+.privacy-note { margin-top: 18px; max-width: 60ch; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--well); }
+.privacy-note strong { color: var(--cyan); }
+.stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.achievement-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.achievement-list li { display: grid; gap: 4px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--well); opacity: .72; }
+.achievement-list li.is-unlocked { opacity: 1; border-color: rgb(var(--accent2-rgb) / .35); }
+.achievement-list li.is-unlocked strong { color: var(--cyan); }
+.achievement-list progress { width: 100%; height: 4px; }
+.cover-img { width: 100%; height: 100%; object-fit: cover; }
+#canary-details { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.canary-link { font-size: 12.5px; }
+#timeline-bars:empty { display: none; }
+@media (max-width: 860px) { .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

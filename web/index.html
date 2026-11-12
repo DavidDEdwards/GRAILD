@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRAIL'D - Song Guesser</title>
+    <meta name="description" content="Guess songs from short snippets of your own music folder. Your files stay on your device.">
+    <link rel="icon" type="image/png" href="assets/graild-logo.png">
+    <link href="assets/tailwind.css" rel="stylesheet">
+    <link href="assets/fonts.css" rel="stylesheet">
+    <link href="assets/graild-ui.css" rel="stylesheet">
+    <link href="web.css" rel="stylesheet">
+</head>
+<body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="i-game" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5.5 3.5-5.5 3.5z"/></symbol>
+        <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v7a4 4 0 0 1-8 0z"/><path d="M8 6H4.5c0 3 1.2 5 3.7 5.4M16 6h3.5c0 3-1.2 5-3.7 5.4"/><path d="M12 15v3.5M8.5 20.5h7"/></symbol>
+        <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+        <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4.5l2 2.5H19a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    </svg>
+
+    <div class="app-shell">
+    <header class="rail">
+        <div class="app-brand">
+            <img class="app-brand-logo" src="assets/graild-logo.png" alt="GRAIL'D crowned G logo" width="64" height="64">
+            <div class="min-w-0">
+                <h1 class="wordmark">Grail'd</h1>
+                <p class="brand-sub">- Web edition</p>
+                <p class="brand-credit">made by ⁹⁹⁹DAVID⁹⁹⁹</p>
+            </div>
+        </div>
+        <nav class="rail-nav" aria-label="Main">
+            <button type="button" data-tab="play" class="nav-btn"><svg class="icon" aria-hidden="true"><use href="#i-game"></use></svg>Play</button>
+            <button type="button" data-tab="stats" class="nav-btn"><svg class="icon" aria-hidden="true"><use href="#i-trophy"></use></svg>Stats</button>
+            <button type="button" data-tab="settings" class="nav-btn"><svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>Settings</button>
+        </nav>
+        <div class="rail-foot">
+            <button type="button" data-action="choose-folder" class="btn btn-secondary btn-sm"><svg class="icon" aria-hidden="true"><use href="#i-folder"></use></svg><span>Choose <span class="label-long">Music </span>Folder</span></button>
+        </div>
+    </header>
+
+    <div class="app-main">
+    <main class="app-content">
+        <input id="folder-input" type="file" webkitdirectory directory multiple hidden>
+
+        <!-- PLAY -->
+        <section id="tab-play" class="space-y-5">
+            <div id="welcome" class="hub-hero">
+                <span class="pill">Your Local Library</span>
+                <h2 class="hub-title">How well do you know your <em>music</em>?</h2>
+                <p class="sub">Pick a folder of songs on this device. GRAIL'D plays a short snippet and you guess the title. The more of the song you need, the fewer points you get.</p>
+                <div class="hub-actions">
+                    <button type="button" data-action="choose-folder" class="btn btn-primary btn-lg">Choose a music folder</button>
+                    <button id="reopen-folder" type="button" class="btn btn-secondary btn-lg hidden">Reopen <span id="reopen-name"></span></button>
+                </div>
+                <p class="privacy-note small"><strong>Your music stays on your device.</strong> Songs are read by your browser and never uploaded. Song titles are only sent to Canary for cover art and details if you leave that on in Settings.</p>
+                <p id="welcome-status" class="small mt-2" role="status"></p>
+            </div>
+
+            <div id="game" class="game-layout hidden">
+                <div class="space-y-3 min-w-0">
+                    <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+                        <p id="library-line" class="tiny"></p>
+                        <p class="tiny">Your round saves automatically in this browser.</p>
+                    </div>
+                    <div class="card card-accent card-pad space-y-5">
+                        <div class="game-head">
+                            <div>
+                                <h3 id="game-mode-title" class="text-xl font-extrabold">Classic Snippets</h3>
+                                <p id="game-mode-description" class="small">Guess the song from its intro.</p>
+                                <p class="small">Attempt <span id="current-attempt">1</span> of <span id="attempt-count">6</span></p>
+                            </div>
+                            <div class="game-hud">
+                                <span id="game-score" class="tabular">Score: 0</span>
+                                <p class="streak tabular">Streak: <span id="game-streak">0</span> 🔥</p>
+                            </div>
+                        </div>
+
+                        <div class="game-options">
+                            <label class="field">Game
+                                <select id="mode-select">
+                                    <option value="classic">Classic Snippets</option>
+                                    <option value="random">Random Drop</option>
+                                </select>
+                            </label>
+                            <label class="field">Difficulty
+                                <select id="difficulty-select">
+                                    <option>Easy</option><option>Medium</option><option>Hard</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="space-y-5">
+                            <div id="timeline-bars" aria-label="Attempts"></div>
+
+                            <div id="snippet-deck" class="deck">
+                                <div class="eq" id="snippet-eq" aria-hidden="true"></div>
+                                <button id="play-btn" type="button">
+                                    <span id="snippet-play-icon" aria-hidden="true">&#9654;</span> <span id="snippet-play-label">PLAY</span> <span><span id="snippet-sec">1</span>s SNIPPET</span>
+                                </button>
+                                <div class="deck-meta">
+                                    <progress id="snippet-progress" max="1000" value="0" aria-label="Snippet playback progress"></progress>
+                                    <span id="snippet-clock" class="tabular">0.0s</span>
+                                    <span id="round-worth" class="worth tabular"></span>
+                                </div>
+                                <label class="volume-row">
+                                    <span>Volume</span>
+                                    <input id="volume-control" type="range" min="0" max="100" value="70" aria-label="Music volume">
+                                    <span id="volume-value" class="w-10 text-right tabular-nums">70%</span>
+                                </label>
+                            </div>
+
+                            <div id="cover-container" class="cover-box hidden">
+                                <div class="cover-frame"><div id="cover-art-inner">💿</div></div>
+                                <p id="correct-song-title"></p>
+                                <p id="canary-details" class="small text-center"></p>
+                            </div>
+
+                            <ol id="round-log" class="round-log hidden" aria-label="Your attempts this round"></ol>
+
+                            <div id="input-area" class="space-y-3">
+                                <div class="guess-wrap">
+                                    <input type="text" id="guess-input" placeholder="Type song title..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions" aria-label="Song title guess">
+                                    <div id="suggestions" class="hidden" role="listbox"></div>
+                                </div>
+                                <div class="game-actions">
+                                    <button id="submit-btn" type="button" class="btn btn-green">SUBMIT</button>
+                                    <button id="skip-btn" type="button" class="btn btn-quiet">SKIP / +1s</button>
+                                    <button id="reroll-btn" type="button" class="btn btn-cyan">REROLL SONG</button>
+                                </div>
+                                <p class="key-hints"><span><kbd>Enter</kbd> submit</span><span><kbd>Ctrl</kbd> <kbd>Space</kbd> play</span><span><kbd>Ctrl</kbd> <kbd>Enter</kbd> skip</span></p>
+                            </div>
+                        </div>
+
+                        <div id="feedback-banner" class="feedback" role="status"></div>
+                        <button id="next-round-btn" type="button" class="btn btn-primary btn-lg btn-block hidden">Next Round</button>
+                    </div>
+                </div>
+                <aside class="game-side" aria-label="This session">
+                    <div class="card card-pad space-y-3">
+                        <h4 class="kicker kicker-c">This session</h4>
+                        <div class="side-stats">
+                            <div class="stat"><p class="stat-label">Correct</p><p id="side-correct" class="stat-value c-g">0</p></div>
+                            <div class="stat"><p class="stat-label">Wrong</p><p id="side-wrong" class="stat-value c-r">0</p></div>
+                            <div class="stat"><p class="stat-label">Accuracy</p><p id="side-accuracy" class="stat-value c-c">-</p></div>
+                            <div class="stat"><p class="stat-label">Rounds</p><p id="side-rounds" class="stat-value">0</p></div>
+                        </div>
+                    </div>
+                    <div class="card card-pad space-y-3">
+                        <h4 class="kicker">Round history</h4>
+                        <ul id="round-history" class="history"></ul>
+                        <p id="round-history-empty" class="small">Finished rounds appear here until you close the tab.</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- STATS -->
+        <section id="tab-stats" class="hidden space-y-5">
+            <div>
+                <h2 class="section-title">Your stats</h2>
+                <p class="sub mt-1">Saved in this browser only. Clearing site data or switching browser starts fresh.</p>
+            </div>
+            <div class="stats-grid" aria-label="Lifetime stats">
+                <div class="stat"><p class="stat-label">Lifetime points</p><p id="stat-points" class="stat-value c-p">0</p></div>
+                <div class="stat"><p class="stat-label">Accuracy</p><p id="stat-accuracy" class="stat-value c-c">-</p></div>
+                <div class="stat"><p class="stat-label">Best streak</p><p id="stat-best-streak" class="stat-value c-o">0</p></div>
+                <div class="stat"><p class="stat-label">Current streak</p><p id="stat-streak" class="stat-value">0</p></div>
+                <div class="stat"><p class="stat-label">Rounds played</p><p id="stat-played" class="stat-value">0</p></div>
+                <div class="stat"><p class="stat-label">Correct / wrong guesses</p><p id="stat-guesses" class="stat-value">0 / 0</p></div>
+                <div class="stat"><p class="stat-label">Grails collected</p><p id="stat-grails" class="stat-value c-g">0</p></div>
+                <div class="stat"><p class="stat-label">Achievements</p><p id="stat-achievements" class="stat-value">0 / 48</p></div>
+            </div>
+            <div class="card card-pad space-y-3">
+                <h3 class="card-title">Achievements</h3>
+                <ul id="achievement-list" class="achievement-list"></ul>
+            </div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section id="tab-settings" class="hidden narrow-col space-y-5">
+            <h2 class="section-title">Settings</h2>
+            <div class="card card-pad space-y-4">
+                <label class="setting-row"><span>Show Canary song details<small>After each round, look up the title on canary.best for cover art, era and a link. Only the title is sent.</small></span>
+                    <input id="canary-toggle" type="checkbox" checked>
+                </label>
+                <div class="setting-row"><span>Music folder<small id="settings-folder">No folder chosen.</small></span>
+                    <button id="forget-folder" type="button" class="btn btn-secondary btn-sm">Forget folder</button>
+                </div>
+                <div class="setting-row"><span>Reset stats<small>Deletes your points, streaks, grails and achievements in this browser.</small></span>
+                    <button id="reset-stats" type="button" class="btn btn-danger btn-sm">Reset</button>
+                </div>
+            </div>
+            <div class="card card-pad space-y-2">
+                <h3 class="card-title">About the web edition</h3>
+                <p class="small">This is the browser version of GRAIL'D. It plays songs from a folder you choose; nothing is uploaded and there is no server. Sign-in, the global leaderboard and challenges are only in the desktop app for now.</p>
+                <p class="small">Chrome and Edge can remember your folder between visits. Firefox and Safari ask you to pick it again each time. Which audio formats play depends on your browser; MP3, M4A/AAC, WAV, OGG and FLAC work almost everywhere.</p>
+            </div>
+        </section>
+    </main>
+    </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

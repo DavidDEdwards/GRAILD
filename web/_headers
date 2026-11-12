@@ -1,0 +1,8 @@
+# Cloudflare Pages reads this file and adds these headers to every page.
+# They lock the site down: scripts only from this site, network calls only to
+# Canary, and the music folder is never sent anywhere.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://canary.best; connect-src 'self' https://canary.best; media-src 'self' blob:; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
