@@ -71,7 +71,7 @@ window.GraildUI = (() => {
                 if (star.y < -6) star.y = height + 6;
                 if (star.x > width + 6) star.x = -6;
                 const glow = .55 + .45 * Math.sin(now / 1000 * star.rate + star.phase);
-                const colour = star.lime ? '210, 245, 140' : '226, 234, 255';
+                const colour = star.lime ? '255, 224, 150' : '232, 224, 255';
                 if (star.bright) {
                     context.fillStyle = `rgba(${colour}, ${.1 * glow})`;
                     context.beginPath();
@@ -112,7 +112,7 @@ window.GraildUI = (() => {
         const latest = roundHistory[0];
         const hasSongs = state.track_count > 0;
         note.classList.toggle('hidden', !latest && !hasSongs);
-        setText('hub-note-tag', latest ? 'LAST ROUND' : 'READY');
+        setText('hub-note-tag', latest ? 'Last round' : 'Ready');
         setText('hub-note-title', latest ? latest.title : `${state.track_count.toLocaleString()} song${state.track_count === 1 ? '' : 's'}`);
         setText('hub-note-detail', latest ? (latest.won ? `+${latest.points} pts` : 'missed') : 'in your library');
         note.onclick = () => switchTab(latest ? 'game' : 'catalog');
@@ -136,7 +136,7 @@ window.GraildUI = (() => {
 
     function confetti() {
         if (reduceMotion()) return;
-        const colours = ['#5c8cff', '#c4f042', '#34d399', '#fbbf24', '#f3f5f8'];
+        const colours = ['#f5c451', '#c7b5ff', '#3ecf8e', '#ff8fc7', '#f2edf5'];
         for (let index = 0; index < 42; index += 1) {
             const piece = make('span', 'confetti');
             piece.style.left = `${Math.random() * 100}vw`;
