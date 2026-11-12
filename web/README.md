@@ -95,12 +95,18 @@ one of these two ways.
 Optional: under the project's **Custom domains** tab you can add your own
 domain instead of `*.pages.dev`.
 
-### GitHub Pages instead
+### GitHub Pages (what this repository uses)
 
-GitHub Pages also works: publish the `web` folder (for example with a GitHub
-Actions "Deploy static content to Pages" workflow whose `path` is `web`).
-GitHub Pages ignores `_headers`, so the extra security headers only apply on
-Cloudflare.
+`.github/workflows/pages.yml` publishes the `web` folder to
+<https://daviddedwards.github.io/GRAILD/> whenever something in `web/` changes
+on the `main` branch. You can also start it by hand: GitHub → **Actions** →
+**Publish web edition to GitHub Pages** → **Run workflow**.
+
+One-time setup: GitHub → the repository → **Settings** → **Pages** → under
+**Build and deployment**, set **Source** to **GitHub Actions**.
+
+GitHub Pages cannot send the `_headers` file, so the same security rules are
+also in a `<meta http-equiv="Content-Security-Policy">` tag in `index.html`.
 
 ## Browser notes
 
