@@ -256,7 +256,7 @@ window.GraildChallenges = (() => {
         if (!lastRun) return;
         const rules = CHALLENGES[lastRun.mode];
         const head = make('div', 'summary-head');
-        head.append(make('span', 'kicker kicker-c', `${rules.name} - run over`));
+        head.append(make('span', 'kicker', `${rules.name} run over`));
         if (lastRun.newBest) head.append(make('span', 'best-badge', 'New best'));
         box.append(head);
         box.append(make('p', 'summary-score tabular', unitText(lastRun.mode, score(lastRun))));

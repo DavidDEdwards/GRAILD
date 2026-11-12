@@ -76,12 +76,11 @@
         <!-- TAB 1: HUB & DASHBOARD -->
         <section id="tab-hub" class="space-y-5">
             <div class="hub-hero">
-                <span class="pill">Your Local Library</span>
-                <h2 class="hub-title">How well do you know your <em>music</em>?</h2>
-                <p class="sub">Guess tracks from short audio previews, browse the songs in your selected folder, and build a score across rounds.</p>
+                <h2 class="hub-title">Name the song from the first second.</h2>
+                <p class="sub">Snippets come from the songs in your own music folder. Every miss plays a little more. Fewer tries, more points.</p>
                 <div class="hub-actions">
-                    <button onclick="document.getElementById('game-modes').scrollIntoView({behavior: 'smooth'})" class="btn btn-primary btn-lg">Choose a Game</button>
-                    <button onclick="switchTab('catalog')" class="btn btn-secondary btn-lg">Explore Catalog</button>
+                    <button onclick="document.getElementById('game-modes').scrollIntoView({behavior: 'smooth'})" class="btn btn-primary btn-lg">Pick a game</button>
+                    <button onclick="switchTab('catalog')" class="btn btn-secondary btn-lg">Browse your songs</button>
                     <button id="hub-resume" type="button" onclick="switchTab('game')" class="btn btn-secondary btn-lg hidden">Resume round</button>
                 </div>
                 <button id="hub-note" type="button" class="hub-note hidden"><b id="hub-note-tag"></b><strong id="hub-note-title"></strong><span id="hub-note-detail"></span></button>
@@ -128,7 +127,7 @@
                 <div id="hub-era-chips" class="chip-row" role="group" aria-label="Recording era shortcuts"></div>
                 <p id="hub-era-summary" class="small" role="status">Uses Canary recording eras for confirmed local matches.</p>
                 <div class="flex flex-wrap gap-x-5 gap-y-1">
-                    <button type="button" onclick="switchTab('catalog'); switchCatalogView('local')" class="link-btn">Match songs and view their Canary eras &rarr;</button>
+                    <button type="button" onclick="switchTab('catalog'); switchCatalogView('local')" class="link-btn">Match songs to Canary eras</button>
                     <button id="canary-refresh-eras" type="button" onclick="refreshCanaryEraList()" class="link-btn is-p">Refresh Canary eras</button>
                 </div>
                 <p id="canary-era-load-status" class="small" style="color:var(--cyan)" role="status"></p>
@@ -137,18 +136,16 @@
                 <div><h2 class="section-title">Choose your game</h2><p class="mt-1 sub">Two ways to play at your own pace, and four challenges with a score to beat.</p></div>
                 <div id="local-game-choices" class="game-cards">
                     <button type="button" onclick="startGameMode('classic')" class="card game-card">
-                        <span class="kicker">The original</span>
                         <span class="wave" data-wave="start" aria-hidden="true"></span>
                         <h3>Classic Snippets</h3>
                         <p>Know it from the intro? Guess the song from its opening seconds. Each attempt reveals a longer preview.</p>
-                        <span class="go">Play Classic &rarr;</span>
+                        <span class="go">Play Classic</span>
                     </button>
                     <button type="button" onclick="startGameMode('random')" class="card game-card is-cyan">
-                        <span class="kicker kicker-c">New game</span>
                         <span class="wave" data-wave="middle" aria-hidden="true"></span>
                         <h3>Random Drop</h3>
                         <p>Jump into a random part of the song. The starting point stays the same for the round as each attempt reveals more.</p>
-                        <span class="go">Play Random Drop &rarr;</span>
+                        <span class="go">Play Random Drop</span>
                     </button>
                 </div>
                 <div id="challenge-section" class="space-y-3">
@@ -212,7 +209,7 @@
                             </div>
                             <div class="game-hud">
                                 <span id="game-score" class="tabular">Score: 0</span>
-                                <p class="streak tabular" id="game-streak-line">Streak: <span id="game-streak">0</span> 🔥</p>
+                                <p class="streak tabular" id="game-streak-line">Streak <span id="game-streak">0</span></p>
                             </div>
                         </div>
 
@@ -251,7 +248,7 @@
                         <div id="snippet-deck" class="deck">
                             <div class="eq" id="snippet-eq" aria-hidden="true"></div>
                             <button onclick="playSnippetSimulation()" id="play-btn" type="button">
-                                <span id="snippet-play-icon" aria-hidden="true">&#9654;</span> <span id="snippet-play-label">PLAY</span> <span><span id="snippet-sec">1</span>s SNIPPET</span>
+                                <span id="snippet-play-icon" aria-hidden="true">&#9654;</span> <span id="snippet-play-label">Play</span> <span><span id="snippet-sec">1</span>s</span>
                             </button>
                             <div class="deck-meta">
                                 <progress id="snippet-progress" max="1000" value="0" aria-label="Snippet playback progress"></progress>
@@ -267,7 +264,7 @@
 
                         <div id="cover-container" class="cover-box hidden">
                             <div class="cover-frame">
-                                <div id="cover-art-inner">💿</div>
+                                <div id="cover-art-inner">&#9834;</div>
                             </div>
                             <p id="correct-song-title">Rental</p>
                         </div>
@@ -281,9 +278,9 @@
                                 <div id="suggestions" class="hidden" role="listbox"></div>
                             </div>
                             <div class="game-actions">
-                                <button onclick="submitGuess()" type="button" class="btn btn-green">SUBMIT</button>
-                                <button onclick="skipAttempt()" type="button" class="btn btn-quiet">SKIP / +1s</button>
-                                <button id="reroll-btn" onclick="rerollSong()" type="button" class="btn btn-cyan">REROLL SONG</button>
+                                <button onclick="submitGuess()" type="button" class="btn btn-green">Guess</button>
+                                <button onclick="skipAttempt()" type="button" class="btn btn-quiet">Skip (+1s)</button>
+                                <button id="reroll-btn" onclick="rerollSong()" type="button" class="btn btn-cyan">New song</button>
                             </div>
                             <p class="key-hints"><span><kbd>Enter</kbd> submit</span><span><kbd>Ctrl</kbd> <kbd>Space</kbd> play</span><span><kbd>Ctrl</kbd> <kbd>Enter</kbd> skip</span><span><kbd>?</kbd> all shortcuts</span></p>
                         </div>
@@ -1316,7 +1313,7 @@
 
         function resetSnippetButton() {
             window.clearTimeout(snippetPlaybackTimer);
-            document.getElementById('snippet-play-label').textContent = 'PLAY';
+            document.getElementById('snippet-play-label').textContent = 'Play';
             document.getElementById('snippet-play-icon').textContent = '\u25b6';
             uiHook('onPlayEnd');
         }
@@ -1333,7 +1330,7 @@
                 return;
             }
             resetSnippetButton();
-            document.getElementById('snippet-play-label').textContent = 'PLAYING';
+            document.getElementById('snippet-play-label').textContent = 'Playing';
             document.getElementById('snippet-play-icon').textContent = '\u266b';
             uiHook('onPlay', result.duration);
             snippetPlaybackTimer = window.setTimeout(resetSnippetButton, result.duration * 1000);
@@ -1477,7 +1474,7 @@
                 image.className = 'w-full h-full object-cover rounded-xl';
                 art.append(image);
             } else {
-                art.textContent = '💿';
+                art.textContent = '\u266A';
             }
             document.getElementById('correct-song-title').textContent = title;
             container.classList.remove('hidden');
@@ -1737,7 +1734,7 @@
         function songHue(title) {
             let hash = 0;
             for (const character of title) hash = (hash * 31 + character.codePointAt(0)) % 360;
-            return hash % 4 === 0 ? 72 + hash % 22 : 205 + hash % 36;
+            return hash % 4 === 0 ? 34 + hash % 14 : 252 + hash % 46;
         }
 
         function syncCatalogChrome() {
