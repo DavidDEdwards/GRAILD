@@ -13,3 +13,6 @@
 .canary-link { font-size: 12.5px; }
 #timeline-bars:empty { display: none; }
 @media (max-width: 860px) { .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.challenge-card[data-tone="blue"] { --tone: var(--purple); --tone-rgb: var(--accent-rgb); }
+@media (max-width: 860px) { .game-cards, .challenge-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .game-cards { grid-template-columns: 1fr; } }

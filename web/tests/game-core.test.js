@@ -2,7 +2,7 @@
 // Or with Node 22+, if installed:  node web/tests/game-core.test.js
 import { test, assert, report } from './harness.js';
 import {
-  ACHIEVEMENTS, DIFFICULTIES, Game, emptyStats, isAudioFile, normalizeSongTitle,
+  ACHIEVEMENTS, CHALLENGES, ChallengeRun, DIFFICULTIES, Game, forfeitRound, saveChallengeBest, sanitizeBests, emptyStats, isAudioFile, normalizeSongTitle,
   pointsFor, randomStart, sanitizeStats, trackTitle,
 } from '../js/game-core.js';
 
@@ -104,6 +104,61 @@ test('saved stats are cleaned up and the catalog matches the desktop app minus s
   assert.equal(stats.counters.hard, 2);
   assert.equal(ACHIEVEMENTS.length, 48);
   assert.equal(new Set(ACHIEVEMENTS.map(item => item.id)).size, 48);
+});
+
+test('Sudden Death: a wrong guess forfeits the song and ends the run', () => {
+  const game = newGame();
+  const run = new ChallengeRun('sudden_death');
+  const result = game.guess('wrong');
+  assert.equal(result.gameOver, false);
+  assert.equal(run.wrongGuessEndsSong(), true);
+  const end = forfeitRound(game);
+  assert.equal(end.gameOver, true);
+  assert.equal(game.stats.current_streak, 0);
+  assert.equal(run.roundFinished(false), 'wrong');
+});
+
+test('Sudden Death: running out by skipping ends with "missed"; wins keep going', () => {
+  const run = new ChallengeRun('sudden_death');
+  assert.equal(run.roundFinished(true, 60), null);
+  assert.equal(run.score, 1);
+  assert.equal(run.roundFinished(false), 'missed');
+});
+
+test('Three Lives: the third missed song ends the run', () => {
+  const run = new ChallengeRun('three_lives');
+  assert.equal(run.roundFinished(false), null);
+  assert.equal(run.roundFinished(true, 30), null);
+  assert.equal(run.roundFinished(false), null);
+  assert.equal(run.lives, 1);
+  assert.equal(run.roundFinished(false), 'lives');
+  assert.equal(run.score, 1);
+});
+
+test('Sprint: ten songs, scored by points', () => {
+  const run = new ChallengeRun('sprint');
+  for (let i = 0; i < 9; i += 1) assert.equal(run.roundFinished(i % 2 === 0, 40), null);
+  assert.equal(run.roundFinished(true, 60), 'done');
+  assert.equal(run.score, 5 * 40 + 60);
+});
+
+test('Time Attack: 90 second clock', () => {
+  const run = new ChallengeRun('time_attack', 1000);
+  assert.equal(run.secondsLeft(1000), 90);
+  assert.equal(run.timeUp(90999), false);
+  assert.equal(run.timeUp(91000), true);
+  assert.equal(run.roundFinished(false), null, 'misses never end a Time Attack run');
+  assert.equal(new ChallengeRun('sprint').secondsLeft(), null);
+});
+
+test('challenge bests keep the highest score and count runs', () => {
+  const bests = {};
+  assert.equal(saveChallengeBest(bests, 'sprint', 200, 5), true);
+  assert.equal(saveChallengeBest(bests, 'sprint', 150, 7), false);
+  assert.deepEqual(bests.sprint, { best_score: 200, best_songs: 7, runs: 2 });
+  assert.equal(saveChallengeBest(bests, 'sudden_death', 0, 0), false, 'a zero run is not a new best');
+  assert.deepEqual(sanitizeBests({ sprint: { best_score: '9', runs: -1 }, bogus: {} }), { sprint: { best_score: 9, best_songs: 0, runs: 0 } });
+  assert.equal(Object.keys(CHALLENGES).length, 4);
 });
 
 const outcome = report();

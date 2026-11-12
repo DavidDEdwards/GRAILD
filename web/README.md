@@ -17,7 +17,20 @@ server, no uploads.
   if Canary says "too many requests" (HTTP 429) the page waits as long as it
   asks. Players can turn this off in Settings.
 
-Not in stage 1: sign-in, the global leaderboard, challenges, the updater.
+**Game modes** (the **Games** tab), same rules as the desktop app:
+
+- **Classic Snippets**: guess from the intro; each attempt reveals more.
+- **Random Drop**: guess from a random moment that stays fixed for the round.
+- **Challenges**, played with the chosen game and difficulty. Personal bests
+  are saved in the browser:
+  - **Sudden Death**: one wrong guess ends the run (skipping is allowed).
+  - **Three Lives**: each missed song costs a life.
+  - **Time Attack**: 90 seconds; songs load and play by themselves.
+  - **Sprint**: ten songs, most points wins.
+- **Canary Shuffle**: no folder needed; picks a random song from Canary's
+  catalogue and links to Canary's own player.
+
+Not in the web edition yet: sign-in, the global leaderboard, the updater.
 
 ## What is in this folder
 
@@ -26,10 +39,10 @@ Not in stage 1: sign-in, the global leaderboard, challenges, the updater.
 | `index.html` | The page (same look as the desktop app). |
 | `web.css` | A few extra styles for the web edition. |
 | `assets/` | Copies of the desktop app's `tailwind.css`, `graild-ui.css`, fonts and logo. |
-| `js/game-core.js` | The game rules, ported from `web_app.py`, `audio_files.py`, `achievements.py`. |
+| `js/game-core.js` | The game rules, ported from `web_app.py`, `audio_files.py`, `achievements.py` and `assets/graild-challenges.js`. |
 | `js/audio.js` | Plays snippets with the Web Audio API (replaces pygame/FFmpeg and `random_snippets.py`). |
 | `js/library.js` | Folder picking and remembering the folder. |
-| `js/canary.js` | Optional Canary song details, with caching and rate-limit handling. |
+| `js/canary.js` | Optional Canary song details and Canary Shuffle, with caching and rate-limit handling. |
 | `js/app.js` | Connects the buttons on the page to the game. |
 | `tests/` | Tests for the game rules. Open `/tests/` in the browser. |
 | `_headers` | Security headers that Cloudflare Pages adds to every page. |

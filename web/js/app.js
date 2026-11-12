@@ -1,6 +1,9 @@
 // Connects the page to the game. This replaces the desktop app's
 // window.pywebview.api.* calls: everything runs in the browser.
-import { ANSWER_SECONDS, GAME_MODES, Game, evaluateAchievements, sanitizeStats } from './game-core.js';
+import {
+  ANSWER_SECONDS, CHALLENGES, CHALLENGE_END_REASONS, ChallengeRun, GAME_MODES, Game, challengeUnitText,
+  evaluateAchievements, forfeitRound, sanitizeBests, sanitizeStats, saveChallengeBest,
+} from './game-core.js';
 import { SnippetPlayer } from './audio.js';
 import * as library from './library.js';
 import * as canary from './canary.js';
@@ -8,6 +11,7 @@ import * as canary from './canary.js';
 const STATS_KEY = 'graild-web-stats-v1';
 const ROUND_KEY = 'graild-web-round-v1';
 const PREFS_KEY = 'graild-web-prefs-v1';
+const BESTS_KEY = 'graild-web-challenge-bests-v1';
 
 const $ = id => document.getElementById(id);
 
@@ -29,6 +33,11 @@ let roundLog = [];       // this round's wrong guesses / skips
 let playback = null;     // { startedAt, duration, frame }
 let busy = false;
 let canaryRequest = 0;
+let challenge = null;    // the running ChallengeRun, if any
+let lastRun = null;      // the finished run shown in the summary box
+let bests = sanitizeBests(load(BESTS_KEY, null));
+let clockTimer = 0;
+let advanceTimer = 0;
 
 // ------------------------------------------------------------ saving
 
@@ -44,7 +53,7 @@ function savePrefs() {
 // ------------------------------------------------------------ tabs
 
 function switchTab(name) {
-  ['play', 'stats', 'settings'].forEach(id => {
+  ['games', 'play', 'stats', 'settings'].forEach(id => {
     $(`tab-${id}`).classList.toggle('hidden', id !== name);
     const button = document.querySelector(`[data-tab="${id}"]`);
     button.className = id === name ? 'nav-btn is-active bg-purple-600' : 'nav-btn';
@@ -105,9 +114,11 @@ function renderGame() {
   $('welcome').classList.toggle('hidden', hasFolder && game.tracks.length > 0);
   $('game').classList.toggle('hidden', !hasFolder || game.tracks.length === 0);
   if (!hasFolder) return;
-  const mode = GAME_MODES[game.mode];
+  const mode = challenge ? { title: challenge.rules.name, description: challenge.rules.blurb } : GAME_MODES[game.mode];
   $('game-mode-title').textContent = mode.title;
   $('game-mode-description').textContent = mode.description;
+  $('mode-select').disabled = Boolean(challenge);
+  $('difficulty-select').disabled = Boolean(challenge);
   $('mode-select').value = game.mode;
   $('difficulty-select').value = game.difficulty;
   $('current-attempt').textContent = String(game.attempt + 1);
@@ -120,11 +131,13 @@ function renderGame() {
   const over = game.gameOver;
   $('play-btn').disabled = over || !game.current;
   ['guess-input', 'submit-btn', 'skip-btn', 'reroll-btn'].forEach(id => { $(id).disabled = over || !game.current; });
+  if (challenge) $('reroll-btn').disabled = true;
   $('input-area').classList.toggle('hidden', over);
   $('next-round-btn').classList.toggle('hidden', !over);
   renderTimeline();
   renderRoundLog();
   renderSession();
+  renderChallengeHud();
 }
 
 function renderSession() {
@@ -316,6 +329,7 @@ function afterResult(result, action) {
     showCover(result.title, result.success);
     if (result.success) playSegment('answer');
     $('next-round-btn').focus();
+    challengeRoundFinished(result);
   }
 }
 
@@ -326,6 +340,15 @@ function submitGuess() {
   player.stop();
   try { player.unlock(); } catch { /* sound is optional for guessing */ }
   const result = game.guess(guess);
+  if (challenge && result.wrongGuess && !result.gameOver && challenge.wrongGuessEndsSong()) {
+    // Sudden Death: a wrong guess loses the song straight away.
+    roundLog.push({ kind: 'guess', guess });
+    const title = game.current.title;
+    const forfeit = forfeitRound(game);
+    forfeit.message = `Wrong guess - Sudden Death! The track was '${title}'.`;
+    afterResult(forfeit, null);
+    return;
+  }
   afterResult(result, result.success || result.ignored ? null : { kind: 'guess', guess });
 }
 
@@ -437,10 +460,194 @@ function handleGuessKey(event) {
   }
 }
 
+// ------------------------------------------------------------ games & challenges
+
+function make(tag, className = '', text = '') {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== '') node.textContent = text;
+  return node;
+}
+
+function needFolder() {
+  if (folder && game.tracks.length) return false;
+  switchTab('play');
+  $('welcome-status').textContent = 'Choose a music folder with songs first, then pick your game.';
+  return true;
+}
+
+function startGameMode(mode) {
+  if (needFolder()) return;
+  if (challenge) finishChallenge('left');
+  lastRun = null;
+  renderSummary();
+  if (game.setMode(mode)) { prefs.mode = game.mode; savePrefs(); }
+  switchTab('play');
+  startNewRound(`${GAME_MODES[game.mode].title}: new round started.`);
+}
+
+function startChallenge(mode) {
+  if (needFolder() || !CHALLENGES[mode]) return;
+  if (challenge) finishChallenge('left');
+  clearTimeout(advanceTimer);
+  lastRun = null;
+  renderSummary();
+  challenge = new ChallengeRun(mode);
+  switchTab('play');
+  startNewRound(`${challenge.rules.name} started. ${challenge.rules.blurb}`);
+  if (challenge.rules.seconds) {
+    const run = challenge;
+    clockTimer = setInterval(() => {
+      if (challenge !== run) return;
+      if (run.timeUp()) finishChallenge('time'); else renderChallengeHud();
+    }, 250);
+    playSegment('snippet'); // runs inside the card click, so the browser allows sound
+  }
+}
+
+function challengeRoundFinished(result) {
+  if (!challenge) return;
+  const reason = challenge.roundFinished(result.success === true, result.points || 0);
+  if (reason) { finishChallenge(reason); return; }
+  renderChallengeHud();
+  if (challenge.mode === 'time_attack') {
+    const run = challenge;
+    advanceTimer = setTimeout(() => {
+      if (challenge !== run || !game.gameOver) return; // player already moved on
+      startNewRound();
+      playSegment('snippet');
+    }, result.success ? 1600 : 1200);
+  }
+}
+
+function finishChallenge(reason) {
+  if (!challenge) return;
+  clearInterval(clockTimer);
+  clearTimeout(advanceTimer);
+  const ended = challenge;
+  challenge = null;
+  let newBest = false;
+  if (ended.played > 0 || reason !== 'left') {
+    newBest = saveChallengeBest(bests, ended.mode, ended.score, ended.solved);
+    if (!save(BESTS_KEY, bests)) showFeedback('Your browser would not let GRAIL\'D save this run.');
+  }
+  if (reason !== 'left') {
+    lastRun = { mode: ended.mode, reason, newBest, score: ended.score, solved: ended.solved, played: ended.played, points: ended.points };
+    if (reason === 'time') { player.stop(); resetPlayButton(); }
+  }
+  renderGame();
+  renderSummary();
+  renderChallengeCards();
+}
+
+function renderChallengeHud() {
+  const hud = $('challenge-hud');
+  hud.classList.toggle('hidden', !challenge);
+  if (!challenge) return;
+  const rules = challenge.rules;
+  $('challenge-name').textContent = rules.name;
+  const meter = $('challenge-meter');
+  meter.replaceChildren();
+  meter.dataset.urgent = 'false';
+  if (challenge.mode === 'three_lives') {
+    for (let index = 0; index < rules.lives; index += 1) {
+      meter.append(make('span', index < challenge.lives ? 'life is-on' : 'life', index < challenge.lives ? '♥' : '♡'));
+    }
+    meter.setAttribute('aria-label', `${challenge.lives} of ${rules.lives} lives left`);
+  } else if (challenge.mode === 'time_attack') {
+    const left = challenge.secondsLeft();
+    meter.textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    meter.dataset.urgent = String(left <= 10);
+    meter.setAttribute('aria-label', `${left} seconds left`);
+  } else if (challenge.mode === 'sprint') {
+    meter.textContent = `Song ${Math.min(challenge.played + 1, rules.songs)} / ${rules.songs}`;
+  } else {
+    meter.textContent = challenge.solved ? `${challenge.solved} in a row` : 'No mistakes allowed';
+  }
+  $('challenge-score').textContent = challengeUnitText(challenge.mode, challenge.score);
+  const best = bests[challenge.mode];
+  $('challenge-best').textContent = best ? `Best ${challengeUnitText(challenge.mode, best.best_score)}` : 'First run';
+}
+
+function renderSummary() {
+  const box = $('challenge-summary');
+  box.replaceChildren();
+  box.classList.toggle('hidden', !lastRun);
+  if (!lastRun) return;
+  const run = lastRun;
+  const head = make('div', 'summary-head');
+  head.append(make('span', 'kicker kicker-c', `${CHALLENGES[run.mode].name} - run over`));
+  if (run.newBest) head.append(make('span', 'best-badge', 'New best'));
+  const stats = make('div', 'summary-stats');
+  for (const [label, value] of [['Songs guessed', `${run.solved} / ${run.played}`], ['Points earned', run.points.toLocaleString()],
+    ['Your best', bests[run.mode] ? challengeUnitText(run.mode, bests[run.mode].best_score) : '-']]) {
+    const stat = make('div', 'stat');
+    stat.append(make('p', 'stat-label', label), make('p', 'stat-value tabular', value));
+    stats.append(stat);
+  }
+  const actions = make('div', 'summary-actions');
+  const again = make('button', 'btn btn-primary', 'Play again');
+  again.type = 'button';
+  again.addEventListener('click', () => startChallenge(run.mode));
+  const games = make('button', 'btn btn-secondary', 'All games');
+  games.type = 'button';
+  games.addEventListener('click', () => { lastRun = null; renderSummary(); switchTab('games'); });
+  actions.append(again, games);
+  box.append(head, make('p', 'summary-score tabular', challengeUnitText(run.mode, run.score)),
+    make('p', 'small', CHALLENGE_END_REASONS[run.reason] || ''), stats, actions);
+  box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+function renderChallengeCards() {
+  $('challenge-cards').replaceChildren(...Object.entries(CHALLENGES).map(([mode, rules]) => {
+    const card = make('button', 'card challenge-card');
+    card.type = 'button';
+    card.dataset.tone = rules.tone;
+    const best = bests[mode];
+    const icon = make('span', 'challenge-icon', rules.icon);
+    icon.setAttribute('aria-hidden', 'true');
+    card.append(icon, make('h4', '', rules.name), make('p', '', rules.short),
+      make('span', `challenge-best${best ? ' has-best' : ''}`, best ? `Best ${challengeUnitText(mode, best.best_score)}` : 'No runs yet'));
+    card.addEventListener('click', () => startChallenge(mode));
+    return card;
+  }));
+}
+
+function buildWaves() {
+  document.querySelectorAll('.wave').forEach(wave => {
+    const middle = wave.dataset.wave === 'middle';
+    wave.replaceChildren(...Array.from({ length: 54 }, (_, index) => {
+      const bar = document.createElement('i');
+      bar.style.height = `${22 + Math.abs(Math.sin(index * 0.9) * Math.cos(index * 0.37)) * 78}%`;
+      if (middle ? index >= 25 && index < 34 : index < 9) bar.className = 'on';
+      return bar;
+    }));
+  });
+}
+
+async function canaryShuffle() {
+  const button = $('canary-shuffle');
+  const out = $('canary-shuffle-result');
+  button.disabled = true;
+  out.textContent = 'Picking a song...';
+  try {
+    const song = await canary.randomSong();
+    const facts = [song.era && `Era: ${song.era}`, song.category].filter(Boolean).join(' · ');
+    const link = make('a', 'link-btn is-p', 'Listen on Canary ↗');
+    link.href = song.pageUrl; link.target = '_blank'; link.rel = 'noopener noreferrer';
+    out.replaceChildren(make('strong', '', song.title), facts ? ` (${facts}) ` : ' ', link);
+  } catch (error) {
+    out.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+
 // ------------------------------------------------------------ folders
 
 function useFolder(result) {
   if (!result) return;
+  if (challenge) finishChallenge('left');
   folder = result;
   game.setTracks(result.tracks);
   player.stop();
@@ -490,6 +697,7 @@ async function reopenRemembered() {
 
 async function forgetFolder() {
   await library.forgetFolder();
+  if (challenge) finishChallenge('left');
   remembered = null;
   folder = null;
   player.stop();
@@ -549,6 +757,11 @@ function wire() {
       if (game.gameOver) startNewRound(); else if (!$('skip-btn').disabled) skipAttempt();
     }
   });
+  document.querySelectorAll('[data-mode]').forEach(card => card.addEventListener('click', () => startGameMode(card.dataset.mode)));
+  $('challenge-quit').addEventListener('click', () => finishChallenge('quit'));
+  $('canary-shuffle').addEventListener('click', canaryShuffle);
+  renderChallengeCards();
+  buildWaves();
   $('snippet-eq').replaceChildren(...Array.from({ length: 18 }, () => document.createElement('i')));
 }
 

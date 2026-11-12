@@ -92,3 +92,19 @@ export async function findSong(title) {
     duration: String(song.duration_str || ''), pageUrl: safeUrl(song.page_url), coverUrl: safeUrl(song.cover_url),
   };
 }
+
+// Canary Shuffle: a random song from Canary's whole catalogue, the same way
+// canary_client.py does it (ask how many songs exist, then fetch one random page
+// of size 1). The player listens on Canary's own website.
+export async function randomSong(random = Math.random) {
+  const first = await getJson('/songs', { page: 0, limit: 1 });
+  const total = Number(first && first.total) || 0;
+  if (!total) throw new Error('Canary has no songs to shuffle right now.');
+  const page = Math.floor(random() * total);
+  const data = page === 0 ? first : await getJson('/songs', { page, limit: 1 });
+  const song = data && Array.isArray(data.songs) ? data.songs[0] : null;
+  if (!song || typeof song.page_url !== 'string' || !song.page_url.startsWith('https://canary.best/')) {
+    throw new Error("Canary's catalogue changed. Try again.");
+  }
+  return { title: String(song.title || 'Unknown'), era: String(song.era || ''), category: String(song.category || ''), pageUrl: song.page_url };
+}

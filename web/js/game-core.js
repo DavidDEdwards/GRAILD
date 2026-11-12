@@ -338,3 +338,111 @@ export class Game {
     return true;
   }
 }
+
+// ---------------------------------------------------------------- challenges
+// Ported from assets/graild-challenges.js. A challenge is a run of normal
+// rounds with extra rules; points still count toward lifetime stats.
+
+export const CHALLENGES = {
+  sudden_death: { name: 'Sudden Death', unit: 'songs', icon: '1×', tone: 'red', short: 'One wrong guess ends the run.',
+    blurb: 'One wrong guess ends the run. Skipping is allowed, so listen longer if you need to.' },
+  three_lives: { name: 'Three Lives', unit: 'songs', lives: 3, icon: '♥♥♥', tone: 'pink', short: 'Every missed song costs a life.',
+    blurb: 'Miss a song and you lose a life. See how far three lives take you.' },
+  time_attack: { name: 'Time Attack', unit: 'pts', seconds: 90, icon: '90s', tone: 'lime', short: 'Most points in 90 seconds.',
+    blurb: '90 seconds on the clock. New songs load and play by themselves, so keep guessing.' },
+  sprint: { name: 'Sprint', unit: 'pts', songs: 10, icon: '10', tone: 'blue', short: 'Ten songs, highest score wins.',
+    blurb: 'Ten songs. Score as many points as you can. Fewer attempts means more points.' },
+};
+
+export const CHALLENGE_END_REASONS = {
+  wrong: 'A wrong guess ended the run.',
+  missed: 'You ran out of attempts on a song.',
+  lives: 'Out of lives.',
+  time: "Time's up!",
+  done: 'All ten songs played.',
+  quit: 'You ended the run.',
+};
+
+export function challengeUnitText(mode, value) {
+  return CHALLENGES[mode].unit === 'songs'
+    ? `${value} song${value === 1 ? '' : 's'}`
+    : `${Number(value).toLocaleString('en-US')} pts`;
+}
+
+export class ChallengeRun {
+  constructor(mode, now = Date.now()) {
+    if (!CHALLENGES[mode]) throw new Error(`Unknown challenge: ${mode}`);
+    const rules = CHALLENGES[mode];
+    this.mode = mode;
+    this.rules = rules;
+    this.solved = 0;
+    this.played = 0;
+    this.points = 0;
+    this.lives = rules.lives || 0;
+    this.endsAt = rules.seconds ? now + rules.seconds * 1000 : 0;
+    this.wrongGuess = false;
+  }
+
+  get score() { return this.rules.unit === 'songs' ? this.solved : this.points; }
+
+  secondsLeft(now = Date.now()) {
+    return this.endsAt ? Math.max(0, Math.ceil((this.endsAt - now) / 1000)) : null;
+  }
+
+  timeUp(now = Date.now()) { return Boolean(this.endsAt) && now >= this.endsAt; }
+
+  // After a wrong guess that did not end the round: in Sudden Death the song
+  // must be forfeited (the caller skips the remaining attempts).
+  wrongGuessEndsSong() {
+    if (this.mode !== 'sudden_death') return false;
+    this.wrongGuess = true;
+    return true;
+  }
+
+  // Call once per finished round. Returns the reason the run ended, or null.
+  roundFinished(won, points = 0) {
+    this.played += 1;
+    if (won) { this.solved += 1; this.points += points; }
+    let reason = null;
+    if (this.mode === 'sudden_death' && !won) reason = this.wrongGuess ? 'wrong' : 'missed';
+    else if (this.mode === 'three_lives' && !won) { this.lives -= 1; if (this.lives <= 0) reason = 'lives'; }
+    else if (this.mode === 'sprint' && this.played >= this.rules.songs) reason = 'done';
+    this.wrongGuess = false;
+    return reason;
+  }
+}
+
+// bests: { mode: { best_score, best_songs, runs } } (same shape as the desktop app).
+export function saveChallengeBest(bests, mode, score, songs) {
+  const previous = bests[mode];
+  const newBest = score > (previous ? previous.best_score : 0);
+  bests[mode] = {
+    best_score: Math.max(previous ? previous.best_score : 0, score),
+    best_songs: Math.max(previous ? previous.best_songs : 0, songs),
+    runs: (previous ? previous.runs : 0) + 1,
+  };
+  return newBest;
+}
+
+export function sanitizeBests(saved) {
+  const bests = {};
+  if (!saved || typeof saved !== 'object') return bests;
+  for (const mode of Object.keys(CHALLENGES)) {
+    const entry = saved[mode];
+    if (!entry || typeof entry !== 'object') continue;
+    const clean = {};
+    for (const key of ['best_score', 'best_songs', 'runs']) {
+      const value = Number(entry[key]);
+      clean[key] = Number.isFinite(value) && value >= 0 ? Math.floor(value) : 0;
+    }
+    bests[mode] = clean;
+  }
+  return bests;
+}
+
+// Ends the current round by using up its remaining attempts (Sudden Death).
+export function forfeitRound(game, now) {
+  let result = null;
+  for (let step = 0; step < 20 && !game.gameOver; step += 1) result = game.skip(now);
+  return result;
+}
