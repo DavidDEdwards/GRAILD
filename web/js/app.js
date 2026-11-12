@@ -74,7 +74,7 @@ function showFeedback(message, success = false) {
 function songHue(title) {
   let hash = 0;
   for (const char of title) hash = (hash * 31 + char.codePointAt(0)) % 360;
-  return hash;
+  return hash % 4 === 0 ? 34 + hash % 14 : 252 + hash % 46;
 }
 
 function renderTimeline() {
@@ -102,7 +102,7 @@ function renderRoundLog() {
     const text = document.createElement('span'); text.className = 'txt'; text.textContent = entry.kind === 'skip' ? 'Skipped' : entry.guess;
     const tag = document.createElement('span');
     tag.className = entry.kind === 'skip' ? 'tag-s' : 'tag-x';
-    tag.textContent = entry.kind === 'skip' ? 'SKIP' : 'WRONG';
+    tag.textContent = entry.kind === 'skip' ? 'Skip' : 'Wrong';
     item.append(n, text, tag);
     return item;
   }));
@@ -198,7 +198,7 @@ function renderFolderSettings() {
 function resetCover() {
   canaryRequest += 1;
   $('cover-container').classList.add('hidden');
-  $('cover-art-inner').replaceChildren('💿');
+  $('cover-art-inner').replaceChildren('\u266A');
   $('canary-details').replaceChildren();
 }
 
@@ -207,7 +207,7 @@ async function showCover(title, won) {
   box.classList.remove('hidden');
   box.classList.toggle('is-miss', !won);
   $('correct-song-title').textContent = title;
-  $('cover-art-inner').replaceChildren('💿');
+  $('cover-art-inner').replaceChildren('\u266A');
   const details = $('canary-details');
   details.replaceChildren();
   if (!prefs.canary) return;
@@ -224,7 +224,7 @@ async function showCover(title, won) {
       image.alt = `Cover art for ${song.title}`;
       image.referrerPolicy = 'no-referrer';
       image.className = 'cover-img';
-      image.onerror = () => $('cover-art-inner').replaceChildren('💿');
+      image.onerror = () => $('cover-art-inner').replaceChildren('\u266A');
       $('cover-art-inner').replaceChildren(image);
     }
     const facts = [song.era && `Era: ${song.era}`, song.category, song.duration].filter(Boolean).join(' · ');
@@ -233,7 +233,7 @@ async function showCover(title, won) {
       const link = document.createElement('a');
       link.href = song.pageUrl; link.target = '_blank'; link.rel = 'noopener noreferrer';
       link.className = 'link-btn is-p canary-link';
-      link.textContent = 'Open on Canary ↗';
+      link.textContent = 'Open on Canary';
       details.append(link);
     }
   } catch (error) {
@@ -247,7 +247,7 @@ function resetPlayButton() {
   if (playback) cancelAnimationFrame(playback.frame);
   playback = null;
   $('snippet-deck').classList.remove('is-playing');
-  $('snippet-play-label').textContent = 'PLAY';
+  $('snippet-play-label').textContent = 'Play';
   $('snippet-play-icon').textContent = '▶';
   $('snippet-progress').value = 0;
 }
@@ -297,7 +297,7 @@ async function playSegment(kind) {
   playback = { ...player.play(buffer, offset, seconds), frame: 0 };
   if (kind === 'snippet') {
     $('snippet-deck').classList.add('is-playing');
-    $('snippet-play-label').textContent = 'PLAYING';
+    $('snippet-play-label').textContent = 'Playing';
     $('snippet-play-icon').textContent = '♫';
   }
   tick();
@@ -322,7 +322,7 @@ function afterResult(result, action) {
   renderGame();
   let message = result.message;
   if (result.newlyUnlocked && result.newlyUnlocked.length) {
-    message += ` 🏆 Unlocked: ${result.newlyUnlocked.map(item => item.name).join(', ')}.`;
+    message += ` Unlocked: ${result.newlyUnlocked.map(item => item.name).join(', ')}.`;
   }
   showFeedback(message, result.success === true);
   if (result.gameOver) {
@@ -576,7 +576,7 @@ function renderSummary() {
   if (!lastRun) return;
   const run = lastRun;
   const head = make('div', 'summary-head');
-  head.append(make('span', 'kicker kicker-c', `${CHALLENGES[run.mode].name} - run over`));
+  head.append(make('span', 'kicker', `${CHALLENGES[run.mode].name} run over`));
   if (run.newBest) head.append(make('span', 'best-badge', 'New best'));
   const stats = make('div', 'summary-stats');
   for (const [label, value] of [['Songs guessed', `${run.solved} / ${run.played}`], ['Points earned', run.points.toLocaleString()],
@@ -633,7 +633,7 @@ async function canaryShuffle() {
   try {
     const song = await canary.randomSong();
     const facts = [song.era && `Era: ${song.era}`, song.category].filter(Boolean).join(' · ');
-    const link = make('a', 'link-btn is-p', 'Listen on Canary ↗');
+    const link = make('a', 'link-btn is-p', 'Listen on Canary');
     link.href = song.pageUrl; link.target = '_blank'; link.rel = 'noopener noreferrer';
     out.replaceChildren(make('strong', '', song.title), facts ? ` (${facts}) ` : ' ', link);
   } catch (error) {
@@ -667,7 +667,7 @@ function useFolder(result) {
   $('welcome-status').textContent = '';
   showFeedback(restored
     ? `Loaded ${result.tracks.length.toLocaleString()} songs. Resumed your unfinished round.`
-    : `Loaded ${result.tracks.length.toLocaleString()} songs. Press PLAY to hear the first snippet.`, true);
+    : `Loaded ${result.tracks.length.toLocaleString()} songs. Press Play to hear the first snippet.`, true);
 }
 
 async function chooseFolder() {

@@ -54,18 +54,16 @@
             <p id="games-status" class="small hidden" role="status" style="color:var(--cyan)"></p>
             <div class="game-cards">
                 <button type="button" data-mode="classic" class="card game-card">
-                    <span class="kicker">The original</span>
                     <span class="wave" data-wave="start" aria-hidden="true"></span>
                     <h3>Classic Snippets</h3>
                     <p>Know it from the intro? Guess the song from its opening seconds. Each attempt reveals a longer preview.</p>
-                    <span class="go">Play Classic &rarr;</span>
+                    <span class="go">Play Classic</span>
                 </button>
                 <button type="button" data-mode="random" class="card game-card is-cyan">
-                    <span class="kicker kicker-c">New game</span>
                     <span class="wave" data-wave="middle" aria-hidden="true"></span>
                     <h3>Random Drop</h3>
                     <p>Jump into a random part of the song. The starting point stays the same for the round as each attempt reveals more.</p>
-                    <span class="go">Play Random Drop &rarr;</span>
+                    <span class="go">Play Random Drop</span>
                 </button>
             </div>
             <div class="space-y-3">
@@ -86,9 +84,8 @@
         <!-- PLAY -->
         <section id="tab-play" class="space-y-5">
             <div id="welcome" class="hub-hero">
-                <span class="pill">Your Local Library</span>
-                <h2 class="hub-title">How well do you know your <em>music</em>?</h2>
-                <p class="sub">Pick a folder of songs on this device. GRAIL'D plays a short snippet and you guess the title. The more of the song you need, the fewer points you get.</p>
+                <h2 class="hub-title">Name the song from the first second.</h2>
+                <p class="sub">Snippets come from the songs in a folder on this device. Every miss plays a little more. Fewer tries, more points.</p>
                 <div class="hub-actions">
                     <button type="button" data-action="choose-folder" class="btn btn-primary btn-lg">Choose a music folder</button>
                     <button id="reopen-folder" type="button" class="btn btn-secondary btn-lg hidden">Reopen <span id="reopen-name"></span></button>
@@ -113,7 +110,7 @@
                             </div>
                             <div class="game-hud">
                                 <span id="game-score" class="tabular">Score: 0</span>
-                                <p class="streak tabular">Streak: <span id="game-streak">0</span> 🔥</p>
+                                <p class="streak tabular">Streak <span id="game-streak">0</span></p>
                             </div>
                         </div>
 
@@ -145,7 +142,7 @@
                             <div id="snippet-deck" class="deck">
                                 <div class="eq" id="snippet-eq" aria-hidden="true"></div>
                                 <button id="play-btn" type="button">
-                                    <span id="snippet-play-icon" aria-hidden="true">&#9654;</span> <span id="snippet-play-label">PLAY</span> <span><span id="snippet-sec">1</span>s SNIPPET</span>
+                                    <span id="snippet-play-icon" aria-hidden="true">&#9654;</span> <span id="snippet-play-label">Play</span> <span><span id="snippet-sec">1</span>s</span>
                                 </button>
                                 <div class="deck-meta">
                                     <progress id="snippet-progress" max="1000" value="0" aria-label="Snippet playback progress"></progress>
@@ -160,7 +157,7 @@
                             </div>
 
                             <div id="cover-container" class="cover-box hidden">
-                                <div class="cover-frame"><div id="cover-art-inner">💿</div></div>
+                                <div class="cover-frame"><div id="cover-art-inner">&#9834;</div></div>
                                 <p id="correct-song-title"></p>
                                 <p id="canary-details" class="small text-center"></p>
                             </div>
@@ -173,9 +170,9 @@
                                     <div id="suggestions" class="hidden" role="listbox"></div>
                                 </div>
                                 <div class="game-actions">
-                                    <button id="submit-btn" type="button" class="btn btn-green">SUBMIT</button>
-                                    <button id="skip-btn" type="button" class="btn btn-quiet">SKIP / +1s</button>
-                                    <button id="reroll-btn" type="button" class="btn btn-cyan">REROLL SONG</button>
+                                    <button id="submit-btn" type="button" class="btn btn-green">Guess</button>
+                                    <button id="skip-btn" type="button" class="btn btn-quiet">Skip (+1s)</button>
+                                    <button id="reroll-btn" type="button" class="btn btn-cyan">New song</button>
                                 </div>
                                 <p class="key-hints"><span><kbd>Enter</kbd> submit</span><span><kbd>Ctrl</kbd> <kbd>Space</kbd> play</span><span><kbd>Ctrl</kbd> <kbd>Enter</kbd> skip</span></p>
                             </div>
